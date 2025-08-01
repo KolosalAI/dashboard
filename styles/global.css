@@ -89,6 +89,8 @@ sidebar {
     align-items: flex-start;
     gap: 40px;
     position: fixed;
+    top: 0;
+    left: 0;
     max-width: 256px;
     width: 100%;
     border-right: 1px solid var(--color-stroke);
@@ -131,6 +133,8 @@ sidebar {
     cursor: pointer;
     text-decoration: none;
     color: var(--color-text);
+    border-top: 1px solid var(--color-background);
+    border-bottom: 1px solid var(--color-background);
 
     i {
         font-size: 20px;
@@ -154,11 +158,8 @@ sidebar {
 
 /* component: layouting */
 .container {
-    @include flex(column);
     max-width: calc(100% - 256px);
     margin-left: auto;
-    animation: opacity 0.5s ease forwards;
-    min-height: 100dvh;
     position: relative;
 }
 
@@ -202,12 +203,14 @@ sidebar {
     width: calc(100% - 256px);
     top: 0;
     right: 0;
+    z-index: 15;
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 52px;
     padding: 0px 24px;
     border-bottom: 1px solid var(--color-stroke);
+    background-color: var(--color-neutral);
 
     .col {
         display: flex;
@@ -220,4 +223,10 @@ sidebar {
             color: var(--color-subtitle);
         }
     }
+}
+
+.content {
+    padding: 24px;
+    min-height: calc(100dvh - 48px);
+    margin-top: 52px;
 }

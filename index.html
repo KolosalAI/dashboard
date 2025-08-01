@@ -5,37 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kolosal - Retrieval Management System</title>
     <link rel="stylesheet" href="styles/global.css">
+    <link rel="stylesheet" href="styles/index.css">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"/>
 </head>
 <body>
-    <sidebar>
-        <img src="https://kolosal-website.s3.us-east-1.amazonaws.com/kolosal-assets/kolosal-logo.svg">
-        <div class="wrapper">
-            <div class="sidebar-menu">
-                <a class="sidebar-item active">
-                    <i class="ri-dashboard-line"></i>
-                    <h2 class="text-14px reguler">Dashboard</h2>
-                </a>
-                <a class="sidebar-item">
-                    <i class="ri-export-line"></i>
-                    <h2 class="text-14px reguler">Uploads</h2>
-                </a>
-                <a class="sidebar-item">
-                    <i class="ri-file-list-3-line"></i>
-                    <h2 class="text-14px reguler">Collection</h2>
-                </a>
-                <a class="sidebar-item">
-                    <i class="ri-refresh-line"></i>
-                    <h2 class="text-14px reguler">Retrieve</h2>
-                </a>
-                <a class="sidebar-item">
-                    <i class="ri-article-line"></i>
-                    <h2 class="text-14px reguler">Documents</h2>
-                </a>
-            </div>
-        </div>
-        <p class="text-12px reguler">© Kolosal Inc - Version 0.0.16</p>
-    </sidebar>
+    <sidebar></sidebar>
+
     <main class="container">
         <div class="header">
             <div class="col">
@@ -47,6 +22,15 @@
                 <a class="btn-md-icon btn-secondary" href="#"><i class="ri-book-2-line"></i></a>
             </div>
         </div>
+        <div class="content">
+            <div class="refresh">
+                <button><i class="ri-reset-right-line"></i></button>
+                <p class="text-14px reguler">Last updated 6:52:37 PM</p>
+            </div>
+            <div class="col-3"></div>
+        </div>
     </main>
+
+    <script src="script/component.js"></script>
 </body>
 </html>
