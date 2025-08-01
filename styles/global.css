@@ -1,0 +1,223 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+/* reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-variation-settings: "slnt" 0;
+    font-optical-sizing: auto;
+    font-family: "Inter", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-smooth: never;
+    scrollbar-width: none;
+    scrollbar-gutter: stable overlay;
+}
+
+h1, h2, h3, h4, h5, h6, small, p, span, a {
+    margin: 0;
+    padding: 0;
+    text-shadow: none; 
+}
+
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-smooth: never;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    color: var(--color-text);
+    background-color: var(--color-neutral);
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+/* font weight */
+.reguler {
+    font-weight: 400;
+    font-style: normal;
+}
+
+.medium {
+    font-weight: 500;
+    font-style: normal;
+}
+
+/* font size */
+.text-12px {
+    font-size: 12px;
+    line-height: 16px;
+}
+
+.text-14px {
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.text-16px {
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: -0.1px;
+}
+
+.text-20px {
+    font-size: 20px;
+    line-height: 28px;
+    letter-spacing: -0.2px;
+}
+
+/* color collection */
+:root {
+    --color-text: #FFFFFF;
+    --color-subtitle: #818282;
+    --color-primary: #2483FF;
+    --color-stroke: #272829;
+    --color-neutral: #0D0E0F;
+    --color-background: #151617;
+    --color-background-alt: #1C1D1E;
+}
+
+/* component: sidebar */
+sidebar {
+    padding: 12px 0px 16px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 40px;
+    position: fixed;
+    max-width: 256px;
+    width: 100%;
+    border-right: 1px solid var(--color-stroke);
+    z-index: 5; 
+    background-color: var(--color-background);
+    height: 100dvh;
+    overflow: hidden;
+
+    .wrapper {
+        flex: 1 0 0;
+        width: 100%;
+    }
+
+    p {
+        color: var(--color-subtitle)
+    }
+
+    img {
+        height: 32px;
+        padding: 4px;
+    }
+}
+
+.sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    border-left: 1px solid var(--color-stroke);
+    padding: 16px 0px;
+    width: 100%;
+}
+
+.sidebar-item {
+    padding: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--color-text);
+
+    i {
+        font-size: 20px;
+        color: var(--color-subtitle);
+    }
+}
+
+.sidebar-item.active {
+    background-color: var(--color-background-alt);
+    border-top: 1px solid var(--color-stroke);
+    border-bottom: 1px solid var(--color-stroke);
+
+    i {
+        color: var(--color-text);
+    }
+}
+
+.sidebar-item:hover {
+    background-color: var(--color-background-alt);
+}
+
+/* component: layouting */
+.container {
+    @include flex(column);
+    max-width: calc(100% - 256px);
+    margin-left: auto;
+    animation: opacity 0.5s ease forwards;
+    min-height: 100dvh;
+    position: relative;
+}
+
+/* component: button */
+.btn-md {
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 32px;
+    padding: 0px 12px;
+    color: var(--color-text);
+    text-decoration: none;
+    border-radius: 8px;
+}
+
+.btn-md-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 32px;
+    width: 32px;
+    border-radius: 8px;
+    text-decoration: none;
+
+    i {
+        font-size: 16px;
+        color: var(--color-text) !important;
+    }
+}
+
+.btn-secondary {
+    background-color: var(--color-background-alt);
+}
+
+/* component: header */
+.header {
+    position: fixed;
+    width: calc(100% - 256px);
+    top: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 52px;
+    padding: 0px 24px;
+    border-bottom: 1px solid var(--color-stroke);
+
+    .col {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 8px;
+
+        i {
+            font-size: 16px;
+            color: var(--color-subtitle);
+        }
+    }
+}
