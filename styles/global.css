@@ -197,6 +197,46 @@ sidebar {
     cursor: pointer;
 }
 
+.btn-sm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 26px;
+    padding: 0px 10px;
+    color: var(--color-text);
+    text-decoration: none;
+    border-radius: 6px;
+    width: fit-content;
+    cursor: pointer;
+
+    i {
+        font-size: 12px;
+    }
+}
+
+.btn-sm-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 26px;
+    width: 26px;
+    border-radius: 6px;
+    text-decoration: none;
+    cursor: pointer;
+
+    i {
+        font-size: 14px;
+        color: var(--color-text) !important;
+    }
+}
+
 .btn-md-icon {
     display: flex;
     justify-content: center;
@@ -205,6 +245,7 @@ sidebar {
     width: 32px;
     border-radius: 8px;
     text-decoration: none;
+    cursor: pointer;
 
     i {
         font-size: 16px;
@@ -221,6 +262,7 @@ sidebar {
 
 .btn-secondary {
     background-color: var(--color-background-alt);
+    border: none;
 }
 
 /* component: header */
