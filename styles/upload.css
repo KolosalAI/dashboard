@@ -67,3 +67,52 @@
     }
 }
 
+.form-wrapper {
+    display: flex;
+    gap: 16px;
+    margin-top: 16px;
+
+    .dropdown {
+        width: 100%;
+    }
+}
+
+.input-file {
+    margin-top: 16px;
+    border: 1px dashed var(--color-stroke);
+    border-radius: 8px;
+    color: var(--color-subtitle);
+    background-color: var(--color-background-alt);
+    cursor: pointer;
+
+    input[type="file"] {
+        display: none;
+    }
+
+    label {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        padding: 40px;
+        cursor: pointer;
+    }
+
+    .icon {
+        height: 32px;
+        width: 32px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--color-neutral);
+        border: 1px solid var(--color-stroke);
+        border-radius: 8px;
+
+        i {
+            font-size: 18px;
+            color: var(--color-text);
+        }
+    }
+}
