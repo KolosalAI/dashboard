@@ -5,6 +5,7 @@
     justify-content: flex-start;
     align-items: center;
     gap: 8px;
+    margin-bottom: 24px;
 
     button {
         background-color: var(--color-background-alt);
@@ -26,5 +27,115 @@
 
     p {
         color: var(--color-subtitle);
+    }
+}
+
+.col-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+
+    .card {
+        justify-content: space-between !important;
+    }
+}
+
+.col-4 {
+    margin-top: 16px;
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 16px;
+    background-color: var(--color-background);
+    border-radius: 12px;
+}
+
+.card-title {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 12px;
+}
+
+.card-body {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+
+    h3 {
+        color: var(--color-subtitle);
+    }
+}
+
+.card-icon {
+    height: 32px;
+    width: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-background-alt);
+    border: 1px solid var(--color-stroke);
+    border-radius: 8px;
+
+    i {
+        font-size: 18px;
+    }
+}
+
+.card-model {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 6px;
+    padding: 8px;
+    background-color: var(--color-neutral);
+    border-radius: 6px;
+
+    h4 {
+        flex: 1 0 0;
+    }
+
+    i {
+        font-size: 16px;
+        color: var(--color-subtitle);
+    }
+}
+
+.card-detail {
+    display: flex;
+    gap: 4px;
+    flex-direction: column;
+    padding: 12px;
+    background-color: var(--color-background-alt);
+    border-radius: 6px;
+
+    p {
+        color: var(--color-subtitle);
+    }
+}
+
+.discord {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    padding: 16px;
+    border: 1px solid var(--color-stroke);
+    border-radius: 12px;
+
+    h4 {
+        text-align: center;
+    }
+
+    a {
+        width: 100%;
     }
 }

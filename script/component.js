@@ -29,4 +29,58 @@ function Sidebar() {
     `;
 }
 
+function Header() {
+    const header = document.querySelector(".header");
+    if (!header) return;
+
+    const title = header.dataset.title || "Dashboard";
+
+    header.innerHTML = `
+        <h1 class="text-14px medium">${title}</h1>
+        <div class="col">
+            <a class="btn-md btn-secondary" href="#">Feedback</a>
+            <div class="dropdown">
+                <a class="btn-md-icon btn-secondary dropdown-trigger" href="#"><i class="ri-book-2-line"></i></a>
+                <div class="dropdown-list">
+                    <a class="item" href="#">
+                        <h2 class="text-14px reguler">Website</h2>
+                        <i class="ri-arrow-right-up-line"></i>
+                    </a>
+                    <a class="item" href="#">
+                        <h2 class="text-14px reguler">Github</h2>
+                        <i class="ri-arrow-right-up-line"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function Dropdown() {
+    document.querySelectorAll('.dropdown-trigger').forEach(trigger => {
+        trigger.addEventListener('click', function (e) {
+            e.preventDefault();
+            const dropdown = this.closest('.dropdown');
+            const list = dropdown.querySelector('.dropdown-list');
+            list.classList.toggle('show');
+            this.classList.toggle('active', list.classList.contains('show'));
+
+            const rect = list.getBoundingClientRect();
+
+            if (rect.right > window.innerWidth) {
+                list.style.right = '0';
+            }
+
+            if (rect.bottom > window.innerHeight) {
+                list.style.bottom = '100%';
+                list.style.marginTop = '';
+            } else {
+                list.style.marginTop = '4px';
+            }
+        });
+    });
+}
+
 Sidebar();
+Header();
+Dropdown();

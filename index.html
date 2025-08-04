@@ -12,22 +12,143 @@
     <sidebar></sidebar>
 
     <main class="container">
-        <div class="header">
-            <div class="col">
-                <i class="ri-dashboard-line"></i>
-                <h1 class="text-14px medium">Dashboard</h1>
-            </div>
-             <div class="col">
-                <a class="btn-md btn-secondary" href="#">Feedback</a>
-                <a class="btn-md-icon btn-secondary" href="#"><i class="ri-book-2-line"></i></a>
-            </div>
-        </div>
+        <div class="header" data-title="Dashboard"></div>
         <div class="content">
             <div class="refresh">
-                <button><i class="ri-reset-right-line"></i></button>
+                <button id="RefreshPage"><i class="ri-reset-right-line"></i></button>
                 <p class="text-14px reguler">Last updated 6:52:37 PM</p>
             </div>
-            <div class="col-3"></div>
+            <div class="col-3">
+                <div class="card">
+                    <div class="card-title">
+                        <div class="card-icon">
+                            <i class="ri-cpu-line"></i>
+                        </div>
+                        <h2 class="text-14px medium">LLM status</h2>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="text-14px reguler">Status:</h3>
+                        <div class="badge badge-success">
+                            <div class="indicator"></div>
+                            <h2 class="text-12px medium">Online</h2>
+                        </div>
+                    </div>
+                    <div class="card-model">
+                        <i class="ri-sparkling-2-fill"></i>
+                        <h4 class="text-14px reguler">gemma3-4b</h4>
+                        <div class="badge badge-disable">
+                            <h2 class="text-12px medium">Sleeping</h2>
+                        </div>
+                    </div>
+                </div> 
+                <div class="card">
+                    <div class="card-title">
+                        <div class="card-icon">
+                            <i class="ri-function-add-line"></i>
+                        </div>
+                        <h2 class="text-14px medium">Embedding Status</h2>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="text-14px reguler">Status:</h3>
+                        <div class="badge badge-success">
+                            <div class="indicator"></div>
+                            <h2 class="text-12px medium">Online</h2>
+                        </div>
+                    </div>
+                    <div class="card-model">
+                        <i class="ri-sparkling-2-fill"></i>
+                        <h4 class="text-14px reguler">gemma3-4b</h4>
+                        <div class="badge badge-disable">
+                            <h2 class="text-12px medium">Sleeping</h2>
+                        </div>
+                    </div>
+                </div> 
+                <div class="discord">
+                    <div class="card-icon">
+                        <i class="ri-group-line"></i>
+                    </div>
+                    <h4 class="text-14px medium">Join our community to get support, share feedback, and stay updated.</h4>
+                    <a class="btn-lg btn-secondary" href="#">Join Discord</a>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-title">
+                        <div class="card-icon">
+                            <i class="ri-file-cloud-line"></i>
+                        </div>
+                        <h2 class="text-14px medium">Document Parser</h2>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="text-14px reguler">Status:</h3>
+                        <div class="badge badge-success">
+                            <div class="indicator"></div>
+                            <h2 class="text-12px medium">Online</h2>
+                        </div>
+                    </div>
+                    <div class="card-detail">
+                        <p class="text-12px reguler">Service: markitdown-api</p>
+                        <p class="text-12px reguler">Port: 8081</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">
+                        <div class="card-icon">
+                            <i class="ri-markdown-line"></i>
+                        </div>
+                        <h2 class="text-14px medium">MarkItDown Status</h2>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="text-14px reguler">Status:</h3>
+                        <div class="badge badge-success">
+                            <div class="indicator"></div>
+                            <h2 class="text-12px medium">Online</h2>
+                        </div>
+                    </div>
+                    <div class="card-detail">
+                        <p class="text-12px reguler">Service: markitdown-api</p>
+                        <p class="text-12px reguler">Port: 8081</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">
+                        <div class="card-icon">
+                            <i class="ri-file-code-line"></i>
+                        </div>
+                        <h2 class="text-14px medium">Docling Status</h2>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="text-14px reguler">Status:</h3>
+                        <div class="badge badge-success">
+                            <div class="indicator"></div>
+                            <h2 class="text-12px medium">Online</h2>
+                        </div>
+                    </div>
+                    <div class="card-detail">
+                        <p class="text-12px reguler">Service: markitdown-api</p>
+                        <p class="text-12px reguler">Port: 8081</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">
+                        <div class="card-icon">
+                            <i class="ri-file-text-line"></i>
+                        </div>
+                        <h2 class="text-14px medium">Document Chunks</h2>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="text-14px reguler">Status:</h3>
+                        <div class="badge badge-success">
+                            <div class="indicator"></div>
+                            <h2 class="text-12px medium">Online</h2>
+                        </div>
+                    </div>
+                    <div class="card-detail">
+                        <p class="text-12px reguler">Service: markitdown-api</p>
+                        <p class="text-12px reguler">Port: 8081</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 

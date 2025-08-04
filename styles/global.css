@@ -78,6 +78,7 @@ body::-webkit-scrollbar {
     --color-neutral: #0D0E0F;
     --color-background: #151617;
     --color-background-alt: #1C1D1E;
+    --color-success: #00D75E;
 }
 
 /* component: sidebar */
@@ -164,10 +165,24 @@ sidebar {
 }
 
 /* component: button */
+.btn-lg {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    padding: 0px 12px;
+    color: var(--color-text);
+    text-decoration: none;
+    border-radius: 8px;
+}
+
 .btn-md {
     font-size: 12px;
     line-height: 16px;
-    font-weight: 500px;
+    font-weight: 500;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -222,6 +237,86 @@ sidebar {
             font-size: 16px;
             color: var(--color-subtitle);
         }
+    }
+}
+
+/* component: dropdown */
+.dropdown {
+    position: relative;
+}
+
+.dropdown-trigger.active {
+    border: 1px solid var(--color-stroke);
+}
+
+.dropdown-list {
+    flex-direction: column;
+    gap: 4px;
+    position: absolute;
+    background-color: var(--color-background);
+    padding: 4px;
+    border-radius: 8px;
+    display: none;
+    min-width: 164px;
+
+    .item {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 4px 8px;
+        gap: 8px;
+        border-radius: 4px;
+        cursor: pointer;
+        text-decoration: none;
+        color: var(--color-text);
+
+        h2 {
+            flex: 1 0 0;
+        }
+
+        i {
+            font-size: 16px;
+            color: var(--color-subtitle);
+        }
+    }
+
+    .item:hover {
+        background-color: var(--color-background-alt);
+    }
+}
+
+.dropdown-list.show {
+    display: flex;
+}
+
+/* component: badget */
+.badge {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 6px;
+    height: 24px;
+    border: 1px solid var(--color-stroke);
+    border-radius: 6px;
+    padding: 0px 8px;
+    width: fit-content;
+    background-color: var(--color-background-alt);
+
+    .indicator {
+        width: 6px;
+        height: 6px;
+        border-radius: 999px;
+    }
+}
+
+.badge-success {.indicator {background-color: var(--color-success);}}
+.badge-disable {
+    .indicator {
+        background-color: var(--color-subtitle);
+    } 
+    
+    h2 {
+        color: var(--color-subtitle);
     }
 }
 
