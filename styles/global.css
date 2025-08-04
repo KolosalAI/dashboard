@@ -339,7 +339,7 @@ sidebar {
     display: none;
     min-width: 164px;
 
-    .item {
+    .dropdown-item {
         display: flex;
         justify-content: flex-start;
         align-items: center;
@@ -360,7 +360,7 @@ sidebar {
         }
     }
 
-    .item:hover {
+    .dropdown-item:hover {
         background-color: var(--color-background-alt);
     }
 }

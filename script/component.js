@@ -42,11 +42,11 @@ function Header() {
             <div class="dropdown">
                 <a class="btn-md-icon btn-secondary dropdown-trigger" href="#"><i class="ri-book-2-line"></i></a>
                 <div class="dropdown-list">
-                    <a class="item" href="#">
+                    <a class="dropdown-item" href="#">
                         <h2 class="text-14px reguler">Website</h2>
                         <i class="ri-arrow-right-up-line"></i>
                     </a>
-                    <a class="item" href="#">
+                    <a class="dropdown-item" href="#">
                         <h2 class="text-14px reguler">Github</h2>
                         <i class="ri-arrow-right-up-line"></i>
                     </a>
