@@ -12,20 +12,56 @@
     <sidebar></sidebar>
 
     <main class="container">
-        <div class="header">
-            <div class="col">
-                <i class="ri-export-line"></i>
-                <h1 class="text-14px medium">Upload</h1>
-            </div>
-             <div class="col">
-                <a class="btn-md btn-secondary" href="#">Feedback</a>
-                <a class="btn-md-icon btn-secondary" href="#"><i class="ri-book-2-line"></i></a>
-            </div>
-        </div>
+        <div class="header" data-title="Upload"></div>
         <div class="content">
+            <div class="wrapper">
+                <div class="title">
+                    <h2 class="text-14px medium">Upload Document</h2>
+                    <h3 class="text-12px reguler">Prepare your documents for AI-powered retrieval.</h3>
+                </div>
+                <div class="form">
+                    <div class="form-doc">
+                        <h2 class="text-12px reguler">Document type:</h2>
+                        <div class="form-doc-list">
+                            <div class="item active">
+                                <img src="https://kolosal-website.s3.us-east-1.amazonaws.com/kolosal-assets/doc-type-pdf.svg">
+                                <h4 class="text-14px medium">PDF</h4>
+                            </div>
+                            <div class="item">
+                                <img src="https://kolosal-website.s3.us-east-1.amazonaws.com/kolosal-assets/doc-type-xlx.svg">
+                                <h4 class="text-14px medium">XLX</h4>
+                            </div>
+                            <div class="item">
+                                <img src="https://kolosal-website.s3.us-east-1.amazonaws.com/kolosal-assets/doc-type-ppt.svg">
+                                <h4 class="text-14px medium">PPTX</h4>
+                            </div>
+                            <div class="item">
+                                <img src="https://kolosal-website.s3.us-east-1.amazonaws.com/kolosal-assets/doc-type-doc.svg">
+                                <h4 class="text-14px medium">DOCX</h4>
+                            </div>
+                            <div class="item">
+                                <img src="https://kolosal-website.s3.us-east-1.amazonaws.com/kolosal-assets/doc-type-html.svg">
+                                <h4 class="text-14px medium">HTML</h4>
+                            </div>
+                            <div class="item">
+                                <img src="https://kolosal-website.s3.us-east-1.amazonaws.com/kolosal-assets/doc-type-text.svg">
+                                <h4 class="text-14px medium">TXT</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-text">
+                        <div class="form-upload">
+                            <h2 class="text-12px reguler">Upload your file:</h2>
+                            <div class="input-form"></div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn-lg btn-primary">Process Document</button>
+            </div>
         </div>
     </main>
 
     <script src="script/component.js"></script>
+    <script src="script/upload.js"></script>
 </body>
 </html>
