@@ -21,90 +21,11 @@
                         <p class="text-14px reguler">Last updated 6:52:37 PM</p>
                     </div>
                     <div class="action">
-                        <h3 class="text-14px reguler">Total: 14 items</h3>
-                        <div class="btn-sm btn-secondary">Latest<i class="ri-sort-desc"></i></div>
+                        <h3 class="text-14px reguler">Total: <span id="CountDocument">0</span> items</h3>
+                        <button class="btn-sm btn-secondary" id="SortDocument">Latest<i class="ri-sort-desc"></i></button>
                     </div>
                 </div>
-                <div class="list">
-                    <div class="item">
-                        <div class="item-title">
-                            <div class="col">
-                                <h2 class="text-14px reguler">document_name</h2>
-                                <div class="badge badge-disable">
-                                    <h2 class="text-12px medium">1489f884-e1db-48a2-8535-37f212c648aa</h2>
-                                </div>
-                            </div>
-                            <button class="btn-sm-icon btn-secondary"><i class="ri-delete-bin-line"></i></button>
-                            <button class="btn-sm-icon btn-secondary" id="AccordionAction"><i class="ri-arrow-down-s-line"></i></button>
-                        </div>
-                        <div class="item-body">
-                            <div class="item-content">
-                                <div class="item-content-title">
-                                    <h3 class="text-12px reguler">Content</h3>
-                                    <i class="ri-arrow-drop-down-fill"></i>
-                                </div>
-                                <div class="item-content-body show">
-                                    <p class="text-14px reguler">
-                                        2. Einstein’s “Spooky Action at a Distance”
-                                        Albert Einstein famously criticized entanglement, calling it “spooky action at a distance.” He believed the phenomenon implied some hidden variables we didn’t understand, since it appeared to violate the speed-of-light limit in relativity.
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="item-content">
-                                <div class="item-content-title">
-                                    <h3 class="text-12px reguler">Metadata</h3>
-                                    <i class="ri-arrow-drop-down-fill"></i>
-                                </div>
-                                <div class="item-content-body">
-<pre class="text-12px reguler">{
-    "indexed_at": 1753985480,
-    "length": 284,
-    "type": "text"
-}</pre>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="item-title">
-                            <div class="col">
-                                <h2 class="text-14px reguler">document_name</h2>
-                                <div class="badge badge-disable">
-                                    <h2 class="text-12px medium">1489f884-e1db-48a2-8535-37f212c648aa</h2>
-                                </div>
-                            </div>
-                            <button class="btn-sm-icon btn-secondary"><i class="ri-delete-bin-line"></i></button>
-                            <button class="btn-sm-icon btn-secondary" id="AccordionAction"><i class="ri-arrow-down-s-line"></i></button>
-                        </div>
-                        <div class="item-body">
-                            <div class="item-content">
-                                <div class="item-content-title">
-                                    <h3 class="text-12px reguler">Content</h3>
-                                    <i class="ri-arrow-drop-down-fill"></i>
-                                </div>
-                                <div class="item-content-body show">
-                                    <p class="text-14px reguler">
-                                        2. Einstein’s “Spooky Action at a Distance”
-                                        Albert Einstein famously criticized entanglement, calling it “spooky action at a distance.” He believed the phenomenon implied some hidden variables we didn’t understand, since it appeared to violate the speed-of-light limit in relativity.
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="item-content">
-                                <div class="item-content-title">
-                                    <h3 class="text-12px reguler">Metadata</h3>
-                                    <i class="ri-arrow-drop-down-fill"></i>
-                                </div>
-                                <div class="item-content-body">
-<pre class="text-12px reguler">{
-    "indexed_at": 1753985480,
-    "length": 284,
-    "type": "text"
-}</pre>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div class="list" id="ListDocument"></div>
             </div>
         </div>
     </main>

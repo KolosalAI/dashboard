@@ -118,7 +118,7 @@ sidebar {
 .sidebar-menu {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 2px;
     border-left: 1px solid var(--color-stroke);
     padding: 16px 0px;
     width: 100%;

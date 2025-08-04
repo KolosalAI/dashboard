@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 @import 'global.css';
 
 .content {
@@ -7,7 +8,7 @@
 }
 
 .wrapper {
-    max-width: 932px;
+    max-width: 956px;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -97,7 +98,7 @@
 .item-body {
     display: none;
     flex-direction: column;
-    gap: 4px;
+    gap: 6px;
 }
 
 .item-body.show {
@@ -110,13 +111,13 @@
     gap: 8px;
     border-radius: 8px;
     background-color: var(--color-background-alt);
-    padding: 8px 12px;
+    padding: 10px 12px;
     border: 1px solid var(--color-stroke);
 
     pre {
-        font-family: 'Courier New', Courier, monospace;
+        font-family: "IBM Plex Mono", monospace;
         background: none;
-        color: inherit;
+        color: var(--color-text);
         width: 100%;
         height: fit-content;
         white-space: pre-wrap;
