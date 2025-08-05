@@ -56,7 +56,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    gap: 8px;
+    gap: 16px;
 
     h3 {
         color: var(--color-subtitle);
@@ -151,4 +151,17 @@
 
 .item-content-body.show {
     display: flex;
+}
+
+.list-blank {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: calc(100% - 48px);
+
+    p {
+        color: var(--color-subtitle);
+        margin-top: 4px;
+    }
 }

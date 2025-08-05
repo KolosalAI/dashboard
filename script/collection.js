@@ -59,6 +59,10 @@ async function FetchDocument() {
         ListDocument();
     } catch (err) {
         console.error('Error loading documents:', err);
+        const container = document.getElementById('ListDocument');
+        const blankState = document.querySelector('.list-blank');
+        if (container) container.style.display = 'none';
+        if (blankState) blankState.style.display = 'flex';
     }
 }
 
@@ -69,6 +73,20 @@ function ListDocument() {
     let sortedDocs = [...cachedDocuments];
     if (currentSort === 'oldest') {
         sortedDocs.reverse();
+    }
+
+    const blankState = document.querySelector('.list-blank');
+    if (sortedDocs.length === 0) {
+        container.style.display = 'none';
+        if (blankState) {
+            blankState.style.display = 'flex';
+        }
+        return;
+    } else {
+        container.style.display = 'block';
+        if (blankState) {
+            blankState.style.display = 'none';
+        }
     }
 
     sortedDocs.forEach(doc => {

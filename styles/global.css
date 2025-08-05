@@ -94,7 +94,7 @@ sidebar {
     left: 0;
     max-width: 256px;
     width: 100%;
-    border-right: 1px solid var(--color-stroke);
+    border-right: 1px solid #272829;
     z-index: 5; 
     background-color: var(--color-background);
     height: 100dvh;
@@ -201,12 +201,16 @@ sidebar {
     justify-content: center;
     align-items: center;
     height: 32px;
-    padding: 0px 12px;
+    padding: 0px 10px;
     color: var(--color-text);
     text-decoration: none;
     border-radius: 8px;
     width: fit-content;
     cursor: pointer;
+
+    i {
+        font-size: 14px;
+    }
 }
 
 .btn-sm {
@@ -297,7 +301,7 @@ sidebar {
     align-items: center;
     height: 52px;
     padding: 0px 24px;
-    border-bottom: 1px solid var(--color-stroke);
+    border-bottom: 1px solid #272829;
     background-color: var(--color-neutral);
 
     .col {
