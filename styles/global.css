@@ -166,6 +166,10 @@ sidebar {
 
 /* component: button */
 .btn-lg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
     font-size: 14px;
     line-height: 20px;
     font-weight: 500;
@@ -179,9 +183,17 @@ sidebar {
     border-radius: 8px;
     width: fit-content;
     cursor: pointer;
+
+    i {
+        font-size: 14px;
+    }
 }
 
 .btn-md {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
     font-size: 12px;
     line-height: 16px;
     font-weight: 500;
@@ -397,6 +409,34 @@ sidebar {
     
     h2 {
         color: var(--color-subtitle);
+    }
+}
+
+/* component: input */
+.input-text {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    h2 {
+        color: var(--color-subtitle);
+    }
+
+    input {
+        width: 100%;
+        background-color: var(--color-background-alt);
+        font-size: 14px;
+        line-height: 20px;
+        color: var(--color-text);
+        border: 1px solid var(--color-stroke);
+        border-radius: 8px;
+        height: 40px;
+        padding: 0px 10px;
+    }
+
+    input:focus-visible {
+        border: 1px solid var(--color-primary);
+        outline: none;
     }
 }
 

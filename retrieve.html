@@ -12,17 +12,41 @@
     <sidebar></sidebar>
 
     <main class="container">
-        <div class="header">
-            <div class="col">
-                <i class="ri-refresh-line"></i>
-                <h1 class="text-14px medium">Retrieve</h1>
-            </div>
-             <div class="col">
-                <a class="btn-md btn-secondary" href="#">Feedback</a>
-                <a class="btn-md-icon btn-secondary" href="#"><i class="ri-book-2-line"></i></a>
-            </div>
-        </div>
+        <div class="header" data-title="Retrieve"></div>
         <div class="content">
+            <div class="wrapper">
+                <div class="search">
+                    <h2 class="text-12px reguler">Search query:</h2>
+                    <textarea placeholder="Enter your query here..."></textarea>
+                    <div class="col">
+                        <div class="input-text">
+                            <h2 class="text-12px reguler">Result limit</h2>
+                            <input type="number" placeholder="Result limit" value="10">
+                        </div>
+                        <div class="input-text">
+                            <h2 class="text-12px reguler">Score Threshold (0.0-1.0)</h2>
+                            <input type="number" placeholder="Score Threshold" value="0.2">
+                        </div>
+                    </div>
+                    <button class="btn-lg btn-primary"><i class="ri-search-2-line"></i>Search Documents</button>
+                </div>
+                <div class="list">
+                    <div class="list-title">
+                        <div class="col">
+                            <h2 class="text-14px reguler">Result: 10 items</h2>
+                            <div class="divider"></div>
+                            <h3 class="text-14px reguler"><i class="ri-time-line"></i>0s</h3>
+                        </div>
+                        <div class="badge badge-disable">
+                            <h2 class="text-12px reguler">Query: "none"</h2>
+                        </div>
+                    </div>
+                    <div class="list-blank">
+                        <h3 class="text-14px medium">No search has been made yet</h3>
+                        <p class="text-12px reguler">Use the search bar above to find documents from your uploaded collection.</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 

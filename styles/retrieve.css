@@ -1,0 +1,108 @@
+.content {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.wrapper {
+    max-width: 956px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: center;
+}
+
+.search {
+    background-color: var(--color-background);
+    padding: 16px;
+    width: 100%;
+    border-radius: 12px;
+
+    textarea {
+        width: 100%;
+        color: var(--color-subtitle);
+        background-color: var(--color-background-alt);
+        border: 1px solid var(--color-stroke);
+        font-size: 14px;
+        line-height: 20px;
+        padding: 6px 10px;
+        border-radius: 8px;
+        resize: none;
+        margin-top: 16px;
+        min-height: 104px;
+    }
+
+    textarea:active {
+        border-color: var(--color-primary);
+    }
+
+    textarea:focus-visible {
+        border: 1px solid var(--color-primary);
+        outline: none;
+    }
+
+    .col {
+        display: flex;
+        gap: 16px;
+        margin-top: 16px;
+
+        .input-text {
+            width: 100%;
+        }
+    }
+
+    button {
+        margin-left: auto;
+        margin-top: 16px;
+    }
+}
+
+.list {
+    width: 100%;
+    height: calc(100% - 48px);
+}
+
+.list-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+
+    .col {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 12px;
+
+        .divider {
+            height: 16px;
+            border-left: 1px solid var(--color-stroke);
+        }
+    }
+
+    h3 {
+        display: flex;
+        gap: 4px;
+
+        i {
+            font-size: 12px;
+            color: var(--color-subtitle);
+        }
+    }
+}
+
+.list-blank {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-background);
+    border-radius: 12px;
+    height: calc(100% - 48px);
+
+    p {
+        color: var(--color-subtitle);
+        margin-top: 4px;
+    }
+}
