@@ -74,10 +74,10 @@ body::-webkit-scrollbar {
     --color-text: #FFFFFF;
     --color-subtitle: #818282;
     --color-primary: #2483FF;
-    --color-stroke: #272829;
+    --color-stroke: #313233;
     --color-neutral: #0D0E0F;
     --color-background: #151617;
-    --color-background-alt: #1C1D1E;
+    --color-background-alt: #212223;
     --color-success: #00D75E;
 }
 
@@ -272,9 +272,17 @@ sidebar {
     border: none;
 }
 
+.btn-primary:hover {
+    box-shadow: none;
+}
+
 .btn-secondary {
     background-color: var(--color-background-alt);
-    border: none;
+    border: 1px solid var(--color-background-alt);
+}
+
+.btn-secondary:hover {
+    border-color: var(--color-stroke);
 }
 
 /* component: header */

@@ -6,7 +6,8 @@ function Sidebar() {
         { icon: "ri-dashboard-line", label: "Dashboard", href: "/" },
         { icon: "ri-export-line", label: "Upload", href: "/upload.html" },
         { icon: "ri-file-list-3-line", label: "Collection", href: "/collection.html" },
-        { icon: "ri-menu-search-line", label: "Retrieve", href: "/retrieve.html" }
+        { icon: "ri-menu-search-line", label: "Retrieve", href: "/retrieve.html" },
+        { icon: "ri-cpu-line", label: "Engine", href: "/engine.html" }
     ];
 
     const currentPath = window.location.pathname;

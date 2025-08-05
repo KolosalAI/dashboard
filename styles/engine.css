@@ -1,0 +1,108 @@
+@import 'global.css';
+
+.title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .col {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .divider {
+        margin: 0px 8px;
+        height: 16px;
+        border-left: 1px solid var(--color-stroke);
+    }
+}
+
+.refresh {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+
+    button {
+        background-color: var(--color-background-alt);
+        outline: none;
+        border: none;
+        border-radius: 999px;
+        height: 26px;
+        width: 26px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+
+        i {
+            font-size: 14px;
+            color: var(--color-text);
+        }
+    }
+
+    p {
+        color: var(--color-subtitle);
+    }
+}
+
+.tab {
+    display: flex;
+    gap: 4px;
+    background-color: var(--color-background);
+    padding: 4px;
+    border-radius: 10px;
+
+    button {
+        border: none;
+        outline: none;
+        background-color: transparent;
+        color: var(--color-subtitle);
+    }
+
+    button:hover {
+        background-color: var(--color-background-alt);
+        color: var(--color-text);
+    }
+
+    button.active {
+        background-color: var(--color-background-alt);
+        border: 1px solid var(--color-stroke);
+        color: var(--color-text);
+    }
+}
+
+.col-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 16px;
+    background-color: var(--color-background);
+    border-radius: 12px;
+
+    .status {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 6px;
+        height: 28px;
+        padding: 0px 8px;
+        background-color: var(--color-background-alt);
+        width: fit-content;
+        border: 1px solid var(--color-stroke);
+        border-radius: 8px;
+
+        i {
+            font-size: 14px;
+        }
+    }
+}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kolosal - Engine</title>
+    <link rel="stylesheet" href="styles/global.css">
+    <link rel="stylesheet" href="styles/engine.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"/>
+</head>
+<body>
+    <sidebar></sidebar>
+
+    <main class="container">
+        <div class="header" data-title="Engine"></div>
+        <div class="content">
+            <div class="col-4">
+                <div class="card">
+                    <h2 class="text-14px medium">Total</h2>
+                    <h3 class="text-20px medium">1</h3>
+                </div>
+                <div class="card">
+                    <h2 class="text-14px medium">Loaded</h2>
+                    <h3 class="text-20px medium">0</h3>
+                </div>
+                <div class="card">
+                    <h2 class="text-14px medium">Unloaded</h2>
+                    <h3 class="text-20px medium">0</h3>
+                </div>
+                <div class="card">
+                    <h2 class="text-14px medium">Autoscaling</h2>
+                    <div class="status">
+                        <i class="ri-lock-unlock-line" style="color: #00D75E;"></i>
+                        <h3 class="text-14px medium">Enables</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="title">
+                <div class="col">
+                    <div class="tab">
+                        <button class="btn-sm active">LLM Models</button>
+                        <button class="btn-sm">Embedding Model</button>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="refresh">
+                        <button id="RefreshPage"><i class="ri-reset-right-line"></i></button>
+                        <p class="text-14px reguler">Last updated 6:52:37 PM</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <button class="btn-md btn-secondary">Browse</button>
+                    <button class="btn-md btn-primary">Add Model</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module" src="script/component.js"></script>
+</body>
+</html>

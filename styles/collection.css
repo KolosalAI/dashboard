@@ -32,7 +32,7 @@
     button {
         background-color: var(--color-background-alt);
         outline: none;
-        border: 1px solid var(--color-stroke);
+        border: none;
         border-radius: 999px;
         height: 26px;
         width: 26px;
