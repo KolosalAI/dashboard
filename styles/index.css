@@ -85,7 +85,7 @@
     border-radius: 8px;
 
     i {
-        font-size: 18px;
+        font-size: 16px;
     }
 }
 
@@ -96,7 +96,8 @@
     gap: 6px;
     padding: 8px;
     background-color: var(--color-neutral);
-    border-radius: 6px;
+    border-radius: 12px;
+    padding-left: 12px;
 
     h4 {
         flex: 1 0 0;
@@ -128,8 +129,8 @@
     align-items: center;
     gap: 24px;
     padding: 16px;
-    border: 1px solid var(--color-stroke);
     border-radius: 12px;
+    background: linear-gradient(to bottom, var(--color-background-alt), var(--color-background));
 
     h4 {
         text-align: center;

@@ -1,21 +1,42 @@
 @import 'global.css';
 
-.title {
+.content {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 24px;
     align-items: center;
+}
 
-    .col {
+.col-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+    width: 100%;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 16px;
+    background-color: var(--color-background);
+    border-radius: 12px;
+
+    .status {
         display: flex;
         justify-content: flex-start;
         align-items: center;
-        gap: 8px;
-    }
+        gap: 6px;
+        height: 28px;
+        padding: 0px 10px;
+        background-color: var(--color-background-alt);
+        width: fit-content;
+        border-radius: 8px;
 
-    .divider {
-        margin: 0px 8px;
-        height: 16px;
-        border-left: 1px solid var(--color-stroke);
+        i {
+            font-size: 14px;
+        }
     }
 }
 
@@ -48,6 +69,31 @@
     }
 }
 
+.list {
+    width: 100%;
+    flex: 1 0 0;
+}
+
+.list-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+
+    .col {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .divider {
+        margin: 0px 8px;
+        height: 16px;
+        border-left: 1px solid var(--color-stroke);
+    }
+}
+
 .tab {
     display: flex;
     gap: 4px;
@@ -74,35 +120,17 @@
     }
 }
 
-.col-4 {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    margin-bottom: 24px;
-}
-
-.card {
+.list-blank {
     display: flex;
     flex-direction: column;
-    gap: 24px;
-    padding: 16px;
+    align-items: center;
+    justify-content: center;
     background-color: var(--color-background);
     border-radius: 12px;
+    height: calc(100% - 48px);
 
-    .status {
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        gap: 6px;
-        height: 28px;
-        padding: 0px 8px;
-        background-color: var(--color-background-alt);
-        width: fit-content;
-        border: 1px solid var(--color-stroke);
-        border-radius: 8px;
-
-        i {
-            font-size: 14px;
-        }
+    p {
+        color: var(--color-subtitle);
+        margin-top: 4px;
     }
 }

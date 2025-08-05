@@ -54,7 +54,6 @@
         border-radius: 8px;
         width: 100%;
         cursor: pointer;
-        border: 1px solid var(--color-stroke);
     }
 
     .item:hover {
@@ -62,7 +61,7 @@
     }
 
     .item.active {
-        border: 1px solid var(--color-stroke);
+        box-shadow: 0 0 0 1px var(--color-stroke);
         background-color: var(--color-background-alt);
     }
 }
