@@ -41,11 +41,11 @@ function Header() {
             <div class="dropdown">
                 <a class="btn-md-icon btn-secondary dropdown-trigger" href="#"><i class="ri-book-2-line"></i></a>
                 <div class="dropdown-list">
-                    <a class="dropdown-item" href="#">
+                    <a class="dropdown-item" href="https://www.kolosal.ai/" target="_blank">
                         <h2 class="text-14px reguler">Website</h2>
                         <i class="ri-arrow-right-up-line"></i>
                     </a>
-                    <a class="dropdown-item" href="#">
+                    <a class="dropdown-item" href="https://github.com/KolosalAI/Kolosal" target="_blank">
                         <h2 class="text-14px reguler">Github</h2>
                         <i class="ri-arrow-right-up-line"></i>
                     </a>
@@ -78,6 +78,32 @@ function Dropdown() {
             }
         });
     });
+    document.addEventListener('click', function (e) {
+        document.querySelectorAll('.dropdown').forEach(dropdown => {
+            if (!dropdown.contains(e.target)) {
+                const list = dropdown.querySelector('.dropdown-list');
+                const trigger = dropdown.querySelector('.dropdown-trigger');
+                list.classList.remove('show');
+                trigger.classList.remove('active');
+            }
+        });
+    });
+}
+
+export function Toast(message) {
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    requestAnimationFrame(() => toast.classList.add('show'));
+    toast.innerHTML = `
+        <div class="toast-body">
+            <h2 class="text-14px reguler">${message}</h2>
+        </div>
+    `;
+    document.body.appendChild(toast);
+    setTimeout(() => {
+        toast.classList.remove('show');
+        toast.addEventListener('transitionend', () => toast.remove(), { once: true });
+    }, 1500);
 }
 
 Sidebar();

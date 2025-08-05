@@ -1,3 +1,5 @@
+import { Toast } from "./component.js";
+
 let currentSort = 'latest'; 
 let cachedDocuments = [];
 
@@ -31,6 +33,7 @@ function ItemContentAccordion() {
 
 async function FetchDocument() {
     try {
+        Toast('Loading...');
         const res = await fetch('http://20.62.11.249:8084/list_documents');
         const idData = await res.json();
         const documentIds = idData.document_ids;

@@ -440,6 +440,40 @@ sidebar {
     }
 }
 
+/* component: toast */
+.toast {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    position: fixed;
+    bottom: 16px;
+    z-index: 35;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+
+    &.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.toast-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-text);
+    height: 32px;
+    border-radius: 8px;
+    padding-left: 12px;
+    padding-right: 12px;
+
+    h2 {
+        color: var(--color-neutral);
+    }
+}
+
 .content {
     padding: 24px;
     min-height: calc(100dvh - 48px);
