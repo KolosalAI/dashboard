@@ -56,7 +56,15 @@ async function FetchDocument() {
 
         const info = await resInfo.json();
         cachedDocuments = info.documents;
+        if (currentSort === 'latest') cachedDocuments.reverse();
         ListDocument();
+
+        const now = new Date();
+        const formattedTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        const timeDisplay = document.getElementById('RefreshTime');
+        if (timeDisplay) {
+            timeDisplay.textContent = `Last updated ${formattedTime}`;
+        }
     } catch (err) {
         console.error('Error loading documents:', err);
         const container = document.getElementById('ListDocument');
@@ -89,14 +97,14 @@ function ListDocument() {
         }
     }
 
-    sortedDocs.forEach(doc => {
+    sortedDocs.forEach((doc, index) => {
         const item = document.createElement('div');
         item.className = 'item';
 
         item.innerHTML = `
             <div class="item-title">
                 <div class="col">
-                    <h2 class="text-14px reguler">${doc.document_name || 'Untitled Document'}</h2>
+                    <h2 class="text-14px reguler">Document - ${currentSort === 'latest' ? sortedDocs.length - index : index + 1}</h2>
                     <div class="badge badge-disable">
                         <h2 class="text-12px medium">${doc.id}</h2>
                     </div>
@@ -141,8 +149,26 @@ function SortDocument() {
 
     sortBtn.addEventListener('click', () => {
         currentSort = currentSort === 'latest' ? 'oldest' : 'latest';
-        sortBtn.innerHTML = `${currentSort === 'latest' ? 'Latest' : 'Oldest'}<i class="ri-sort-desc"></i>`;
+        sortBtn.innerHTML = currentSort === 'latest'
+            ? 'Latest <i class="ri-sort-desc"></i>'
+            : 'Oldest <i class="ri-sort-asc"></i>';
         ListDocument();
+    });
+}
+
+function RefreshCollection() {
+    const refreshBtn = document.getElementById('RefreshCollection');
+    if (!refreshBtn) return;
+
+    refreshBtn.addEventListener('click', () => {
+        FetchDocument();
+
+        const now = new Date();
+        const formattedTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        const timeDisplay = document.getElementById('RefreshTime');
+        if (timeDisplay) {
+            timeDisplay.textContent = `Last updated ${formattedTime}`;
+        }
     });
 }
 
@@ -150,3 +176,4 @@ FetchDocument();
 ItemAccordion();
 ItemContentAccordion();
 SortDocument();
+RefreshCollection();
