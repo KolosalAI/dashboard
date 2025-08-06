@@ -83,7 +83,7 @@ function ListDocument() {
         }
         return;
     } else {
-        container.style.display = 'block';
+        container.style.display = 'flex';
         if (blankState) {
             blankState.style.display = 'none';
         }
