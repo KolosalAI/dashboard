@@ -100,22 +100,16 @@ function CountModel(summary) {
     }
 }
 
-function RefreshCollection() {
+function RefreshModel() {
     const refreshBtn = document.getElementById('RefreshModel');
     if (!refreshBtn) return;
 
     refreshBtn.addEventListener('click', () => {
+        cachedModels = null;
         ModelList();
-
-        const now = new Date();
-        const formattedTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-        const timeDisplay = document.getElementById('RefreshModelTime');
-        if (timeDisplay) {
-            timeDisplay.textContent = `Last updated ${formattedTime}`;
-        }
     });
 }
 
 ModelList();
 FilterbyTab();
-RefreshCollection();
+RefreshModel();

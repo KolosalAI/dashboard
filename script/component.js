@@ -40,7 +40,7 @@ function Header() {
         <div class="col">
             <a class="btn-md btn-secondary" href="#">Feedback</a>
             <div class="dropdown">
-                <a class="btn-md-icon btn-secondary dropdown-trigger" href="#"><i class="ri-book-2-line"></i></a>
+                <a class="btn-md-icon btn-secondary dropdown-trigger" href="#"><i class="ri-book-2-line" style="color: #FFF !important;"></i></a>
                 <div class="dropdown-list">
                     <a class="dropdown-item" href="https://www.kolosal.ai/" target="_blank">
                         <h2 class="text-14px reguler">Website</h2>

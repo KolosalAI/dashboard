@@ -34,9 +34,25 @@ async function GetData() {
         updateModelUI("llm", "ModelNameLLM", "ModelStatusLLM", "ModelAvailabilityLLM");
         updateModelUI("embedding", "ModelNameEmbedded", "ModelStatusEmbedded", "ModelAvailabilityEmbedded");
 
+        const now = new Date();
+        const formattedTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        const timeDisplay = document.getElementById('RefreshDataTime');
+        if (timeDisplay) {
+            timeDisplay.textContent = `Last updated ${formattedTime}`;
+        }
+
     } catch (error) {
         console.error('Failed to fetch engine data:', error);
     }
 }
 
+function RefreshData() {
+    const refreshBtn = document.getElementById('RefreshData');
+    if (!refreshBtn) return;
+
+    refreshBtn.addEventListener('click', GetData);
+}
+
+
 GetData();
+RefreshData();
