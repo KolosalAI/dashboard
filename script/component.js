@@ -62,20 +62,51 @@ function Dropdown() {
             e.preventDefault();
             const dropdown = this.closest('.dropdown');
             const list = dropdown.querySelector('.dropdown-list');
+
+            document.querySelectorAll('.dropdown-list.show').forEach(openList => {
+                if (openList !== list) {
+                    openList.classList.remove('show');
+                    const activeTrigger = openList.closest('.dropdown')?.querySelector('.dropdown-trigger');
+                    if (activeTrigger) activeTrigger.classList.remove('active');
+                }
+            });
+
             list.classList.toggle('show');
             this.classList.toggle('active', list.classList.contains('show'));
+
+            list.style.top = '';
+            list.style.bottom = '';
+            list.style.left = '';
+            list.style.right = '';
+            list.style.marginTop = '';
 
             const rect = list.getBoundingClientRect();
 
             if (rect.right > window.innerWidth) {
                 list.style.right = '0';
+                list.style.left = 'auto';
+            } else {
+                list.style.left = '0';
+                list.style.right = 'auto';
             }
 
             if (rect.bottom > window.innerHeight) {
-                list.style.bottom = '100%';
-                list.style.marginTop = '';
+                list.style.top = 'auto';
+                list.style.bottom = 'calc(100% + 4px)';
             } else {
-                list.style.marginTop = '4px';
+                list.style.top = 'calc(100% + 4px)';
+                list.style.bottom = 'auto';
+            }
+        });
+    });
+
+    document.addEventListener('click', function (e) {
+        document.querySelectorAll('.dropdown').forEach(dropdown => {
+            if (!dropdown.contains(e.target)) {
+                const list = dropdown.querySelector('.dropdown-list');
+                const trigger = dropdown.querySelector('.dropdown-trigger');
+                list.classList.remove('show');
+                trigger.classList.remove('active');
             }
         });
     });
