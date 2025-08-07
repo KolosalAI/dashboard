@@ -50,6 +50,10 @@ function Header() {
                         <h2 class="text-14px reguler">Github</h2>
                         <i class="ri-arrow-right-up-line"></i>
                     </a>
+                    <a class="dropdown-item" href="#" target="_blank">
+                        <h2 class="text-14px reguler">Enterprise</h2>
+                        <i class="ri-arrow-right-up-line"></i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -147,7 +151,30 @@ function Popup() {
     });
 }
 
+function HeadInitiate() {
+    const appleTouchIcon = document.createElement("link");
+    appleTouchIcon.rel = "apple-touch-icon";
+    appleTouchIcon.sizes = "180x180";
+    appleTouchIcon.href = "https://kolosal-website.s3.us-east-1.amazonaws.com/kolosal-assets/apple-touch-icon.png";
+    document.head.appendChild(appleTouchIcon);
+
+    const favicon32 = document.createElement("link");
+    favicon32.rel = "icon";
+    favicon32.type = "image/png";
+    favicon32.sizes = "32x32";
+    favicon32.href = "https://kolosal-website.s3.us-east-1.amazonaws.com/kolosal-assets/favicon-32x32.png";
+    document.head.appendChild(favicon32);
+
+    const favicon16 = document.createElement("link");
+    favicon16.rel = "icon";
+    favicon16.type = "image/png";
+    favicon16.sizes = "16x16";
+    favicon16.href = "https://kolosal-website.s3.us-east-1.amazonaws.com/kolosal-assets/favicon-16x16.png";
+    document.head.appendChild(favicon16);
+}
+
 Sidebar();
 Header();
 Dropdown();
 Popup();
+HeadInitiate();

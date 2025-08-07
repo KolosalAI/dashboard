@@ -340,7 +340,7 @@ sidebar {
     flex-direction: column;
     gap: 6px;
 
-    h2 {
+    h4 {
         color: var(--color-subtitle);
     }
 }

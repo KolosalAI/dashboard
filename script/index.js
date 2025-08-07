@@ -46,6 +46,43 @@ async function GetData() {
     }
 }
 
+async function DocumentChunks() {
+    const card = document.getElementById('DocumentChunks');
+    const badge = card?.querySelector('.badge');
+    const badgeLabel = badge?.querySelector('h2');
+    try {
+        const response = await fetch('http://20.62.11.249:8084/list_documents');
+        const responseData = await response.json();
+        const collection_name = responseData.collection_name;
+        const total_count = responseData.total_count;
+
+        if (!collection_name || typeof total_count !== 'number') return;
+
+        if (badge && badgeLabel) {
+            badge.classList.remove('badge-danger');
+            badge.classList.add('badge-success');
+            badgeLabel.textContent = 'Connected';
+        }
+
+        if (!card) return;
+
+        const detailContainer = card.querySelector('.card-detail');
+        if (detailContainer) {
+            detailContainer.innerHTML = `
+                <p class="text-12px reguler">Collection: ${collection_name}</p>
+                <p class="text-12px reguler">Total documents: ${total_count}</p>
+            `;
+        }
+    } catch (error) {
+        if (badge && badgeLabel) {
+            badge.classList.remove('badge-success');
+            badge.classList.add('badge-danger');
+            badgeLabel.textContent = 'Disconnected';
+        }
+        console.error('Failed to fetch document chunks:', error);
+    }
+}
+
 function RefreshData() {
     const refreshBtn = document.getElementById('RefreshData');
     if (!refreshBtn) return;
@@ -56,3 +93,4 @@ function RefreshData() {
 
 GetData();
 RefreshData();
+DocumentChunks();
