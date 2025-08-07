@@ -109,7 +109,7 @@ function ListDocument() {
                         <h2 class="text-12px medium">${doc.id}</h2>
                     </div>
                 </div>
-                <button class="btn-sm-icon btn-secondary"><i class="ri-delete-bin-line"></i></button>
+                <button class="btn-sm-icon btn-danger"><i class="ri-delete-bin-line"></i></button>
                 <button class="btn-sm-icon btn-secondary accordion-action"><i class="ri-arrow-down-s-line"></i></button>
             </div>
             <div class="item-body">

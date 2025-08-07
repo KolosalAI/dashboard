@@ -250,7 +250,6 @@ sidebar {
 
     i {
         font-size: 14px;
-        color: var(--color-text) !important;
     }
 }
 
@@ -266,7 +265,6 @@ sidebar {
 
     i {
         font-size: 16px;
-        color: var(--color-text) !important;
     }
 }
 
@@ -284,6 +282,7 @@ sidebar {
 .btn-secondary {
     background-color: var(--color-background-alt);
     border: 1px solid var(--color-background-alt);
+    color: var(--color-text);
 }
 
 .btn-secondary:hover {
@@ -297,6 +296,13 @@ sidebar {
 
 .btn-ghost:hover {
     background-color: var(--color-background-alt);
+}
+
+.btn-danger {
+    background-color: #3A0816;
+    color: var(--color-danger);
+    outline: none;
+    border: none;
 }
 
 /* component: header */
