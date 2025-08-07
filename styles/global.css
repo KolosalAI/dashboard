@@ -336,9 +336,6 @@ sidebar {
 /* component: dropdown */
 .dropdown {
     position: relative;
-}
-
-.dropdown-trigger {
     display: flex;
     flex-direction: column;
     gap: 6px;
@@ -346,26 +343,21 @@ sidebar {
     h2 {
         color: var(--color-subtitle);
     }
+}
 
-    .item {
-        display: flex;
-        justify-items: flex-start;
-        gap: 8px;
-        align-items: center;
-        padding: 0px 14px;
-        height: 40px;
-        border: 1px solid var(--color-stroke);
-        border-radius: 8px;
-        min-width: 200px;
-        cursor: pointer;
+.dropdown-form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 40px;
+    border: 1px solid var(--color-stroke);
+    padding: 0px 12px;
+    border-radius: 8px;
+    background-color: var(--color-background-alt);
+    cursor: pointer;
 
-        h3 {
-            flex: 1 0 0;
-        }
-
-        i {
-            font-size: 14px;
-        }
+    h3 {
+        user-select: none;
     }
 }
 
@@ -378,6 +370,7 @@ sidebar {
     border-radius: 8px;
     display: none;
     min-width: 164px;
+    width: 100%;
     border: 1px solid var(--color-stroke);
 
     .dropdown-item {
@@ -502,6 +495,7 @@ sidebar {
         border-radius: 8px;
         resize: none;
         min-height: 80px;
+        color: var(--color-text);
     }
 
     textarea:active {
@@ -557,7 +551,7 @@ sidebar {
     left: 0;
     z-index: 15;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(2px);
     height: 100dvh;
     display: none;
@@ -569,7 +563,6 @@ sidebar {
 
 .popup-body {
     background-color: var(--color-background);
-    border: 1px solid var(--color-stroke);
     padding: 16px;
     min-width: 612px;
     border-radius: 12px;
@@ -578,8 +571,8 @@ sidebar {
 .popup-title {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+    align-items: flex-start;
+    margin-bottom: 24px;
 
     .col {
         p {
@@ -592,7 +585,46 @@ sidebar {
 .popup-content {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 24px;
+}
+
+/* component: checkbox */
+.checkbox {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 12px;
+
+    input {
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-color: var(--color-background-alt);
+        border: 1px solid var(--color-stroke);
+        width: 20px;
+        height: 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        display: inline-block;
+        position: relative;
+    }
+
+    input:checked:after {
+        content: '';
+        position: absolute;
+        top: 3px;
+        left: 6px;
+        width: 4px;
+        height: 8px;
+        border: solid var(--color-text);
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+    }
+
+    input:checked {
+        background-color: var(--color-primary);
+        border: 1px solid var(--color-primary);
+    }
 }
 
 /* component: content */

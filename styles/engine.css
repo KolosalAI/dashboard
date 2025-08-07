@@ -13,6 +13,12 @@
     gap: 16px;
 }
 
+.col-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
 .col-4 {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -150,19 +156,27 @@
 .model-item {
     display: flex;
     align-items: center;
-    gap: 16px;
-    padding: 16px;
+    gap: 20px;
+    padding: 12px 20px;
     background-color: var(--color-background);
     border-radius: 10px;
 
     .col {
         display: flex;
         flex-direction: column;
-        gap: 4px;
+        gap: 8px;
         flex: 1 0 0;
 
         p {
             color: var(--color-subtitle);
         }
     }
+}
+
+.add-model {
+    min-width: 680px;
+}
+
+.add-model-action {
+    align-self: flex-end;
 }

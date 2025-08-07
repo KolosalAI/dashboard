@@ -71,7 +71,7 @@
     gap: 16px;
     margin-top: 16px;
 
-    .dropdown {
+    .dropdown, .input-text {
         width: 100%;
     }
 }
