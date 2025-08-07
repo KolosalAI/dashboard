@@ -50,17 +50,57 @@
                     </div>
                     <div class="col">
                         <button class="btn-md btn-secondary">Browse</button>
-                        <button class="btn-md btn-primary">Add Model</button>
+                        <button class="btn-md btn-primary" data-popup="AddModel">Add Model</button>
                     </div>
                 </div>
                 <div class="list-blank">
                     <h3 class="text-14px medium">No engines added yet</h3>
                     <p class="text-12px reguler">Add a model to get started and enhance how you retrieve information.</p>
                 </div>
+                <div class="list-content"></div>
             </div>
         </div>
     </main>
 
+    <div class="popup" data-popup="AddModel">
+        <div class="popup-body">
+            <div class="popup-title">
+                <div class="col">
+                    <h2 class="text-14px medium">Add New Model</h2>
+                    <p class="text-14px reguler">Configure and add a new AI model to the engine</p>
+                </div>
+                <div class="btn-md-icon btn-ghost close-popup"><i class="ri-close-large-line"></i></div>
+            </div>
+            <div class="popup-content">
+                <div class="col-2">
+                    <div class="input-text">
+                        <h2 class="text-12px reguler">Model ID</h2>
+                        <input type="text" placeholder="Test">
+                    </div>
+                    <div class="input-text">
+                        <h2 class="text-12px reguler">Model Type</h2>
+                        <input type="text" placeholder="Test">
+                    </div>
+                </div>
+                <div class="text-area">
+                    <h2 class="text-12px reguler">Model Path or URL</h2>
+                    <textarea placeholder="Enter your query here..."></textarea>
+                </div>
+                <div class="col-2">
+                    <div class="input-text">
+                        <h2 class="text-12px reguler">Inference Engine</h2>
+                        <input type="text" placeholder="Test">
+                    </div>
+                    <div class="input-text">
+                        <h2 class="text-12px reguler">Main GPU ID</h2>
+                        <input type="text" placeholder="Test">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script type="module" src="script/component.js"></script>
+    <script type="module" src="script/engine.js"></script>
 </body>
 </html>

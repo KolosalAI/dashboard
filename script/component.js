@@ -79,16 +79,6 @@ function Dropdown() {
             }
         });
     });
-    document.addEventListener('click', function (e) {
-        document.querySelectorAll('.dropdown').forEach(dropdown => {
-            if (!dropdown.contains(e.target)) {
-                const list = dropdown.querySelector('.dropdown-list');
-                const trigger = dropdown.querySelector('.dropdown-trigger');
-                list.classList.remove('show');
-                trigger.classList.remove('active');
-            }
-        });
-    });
 }
 
 export function Toast(message) {
@@ -107,6 +97,26 @@ export function Toast(message) {
     }, 1500);
 }
 
+function Popup() {
+    document.querySelectorAll("[data-popup]").forEach(trigger => {
+        trigger.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const target = trigger.getAttribute("data-popup");
+            const popup = document.querySelector(`.popup[data-popup="${target}"]`);
+            if (popup) popup.classList.add("show");
+        });
+    });
+
+    document.querySelectorAll(".close-popup").forEach(closeBtn => {
+        closeBtn.addEventListener("click", (e) => {
+            e.stopPropagation(); 
+            const popup = closeBtn.closest(".popup");
+            if (popup) popup.classList.remove("show");
+        });
+    });
+}
+
 Sidebar();
 Header();
 Dropdown();
+Popup();

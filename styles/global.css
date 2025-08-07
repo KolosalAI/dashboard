@@ -79,6 +79,7 @@ body::-webkit-scrollbar {
     --color-background: #151617;
     --color-background-alt: #212223;
     --color-success: #00D75E;
+    --color-danger: #ce1c4e;
 }
 
 /* component: sidebar */
@@ -289,6 +290,15 @@ sidebar {
     border-color: var(--color-stroke);
 }
 
+.btn-ghost {
+    border: none;
+    outline: none;
+}
+
+.btn-ghost:hover {
+    background-color: var(--color-background-alt);
+}
+
 /* component: header */
 .header {
     position: fixed;
@@ -414,7 +424,18 @@ sidebar {
     }
 }
 
-.badge-success {.indicator {background-color: var(--color-success);}}
+.badge-success {
+    .indicator {
+        background-color: var(--color-success);
+    }
+}
+
+.badge-danger {
+    .indicator {
+        background-color: var(--color-danger);
+    }
+}
+
 .badge-disable {
     .indicator {
         background-color: var(--color-subtitle);
@@ -448,6 +469,40 @@ sidebar {
     }
 
     input:focus-visible {
+        border: 1px solid var(--color-primary);
+        outline: none;
+    }
+}
+
+/* component: textarea */
+.text-area {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    h2 {
+        color: var(--color-subtitle);
+    }
+
+
+    textarea {
+        width: 100%;
+        color: var(--color-subtitle);
+        background-color: var(--color-background-alt);
+        border: 1px solid var(--color-stroke);
+        font-size: 14px;
+        line-height: 20px;
+        padding: 6px 10px;
+        border-radius: 8px;
+        resize: none;
+        min-height: 80px;
+    }
+
+    textarea:active {
+        border-color: var(--color-primary);
+    }
+
+    textarea:focus-visible {
         border: 1px solid var(--color-primary);
         outline: none;
     }
@@ -487,6 +542,54 @@ sidebar {
     }
 }
 
+/* component: popup */
+.popup {
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 15;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+    height: 100dvh;
+    display: none;
+}
+
+.popup.show {
+    display: flex;
+}
+
+.popup-body {
+    background-color: var(--color-background);
+    border: 1px solid var(--color-stroke);
+    padding: 16px;
+    min-width: 612px;
+    border-radius: 12px;
+}
+
+.popup-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    .col {
+        p {
+            color: var(--color-subtitle);
+            margin-top: 4px;
+        }
+    }
+}
+
+.popup-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* component: content */
 .content {
     padding: 24px;
     min-height: calc(100dvh - 48px);
