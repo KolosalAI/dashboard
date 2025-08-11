@@ -1,96 +1,225 @@
 import { Toast } from "./component.js";
 
-async function GetData() {
+const loadingFetch = (typeof window !== "undefined" && window.loadingFetch)
+  ? window.loadingFetch
+  : (...args) => fetch(...args);
+
+async function ModelData() {
+    const ids = [
+        "ModelLLMStatus",
+        "ModelEmbedStatus",
+        "ModelParserStatus"
+    ];
+    const URL = "http://172.200.176.206:8084/status";
+
+    let embedCount = 0;
+    let llmCount = 0;
+    let data = null;
     try {
-        Toast('Loading...');
-        const response = await fetch('http://20.62.11.249:8084/models');
-        const data = await response.json();
+        const res = await loadingFetch(URL);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        data = await res.json();
 
-        if (!Array.isArray(data.models)) return;
-
-        const updateModelUI = (modelType, nameId, statusId, availabilityId) => {
-            const model = data.models.find(m => m.model_type === modelType);
-            const nameEl = document.getElementById(nameId);
-            const statusEl = document.getElementById(statusId);
-            const availabilityEl = document.getElementById(availabilityId);
-
-            if (model && nameEl) nameEl.textContent = model.model_id;
-            if (model && statusEl) statusEl.textContent = model.status;
-
-            if (model && availabilityEl) {
-                const label = availabilityEl.querySelector('h2');
-                availabilityEl.classList.remove('badge-success', 'badge-danger');
-
-                if (model.available) {
-                    availabilityEl.classList.add('badge-success');
-                    if (label) label.textContent = 'Online';
-                } else {
-                    availabilityEl.classList.add('badge-danger');
-                    if (label) label.textContent = 'Offline';
-                }
-            }
-        };
-
-        updateModelUI("llm", "ModelNameLLM", "ModelStatusLLM", "ModelAvailabilityLLM");
-        updateModelUI("embedding", "ModelNameEmbedded", "ModelStatusEmbedded", "ModelAvailabilityEmbedded");
-
-        const now = new Date();
-        const formattedTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-        const timeDisplay = document.getElementById('RefreshDataTime');
-        if (timeDisplay) {
-            timeDisplay.textContent = `Last updated ${formattedTime}`;
+        if (Array.isArray(data.engines)) {
+            embedCount = data.engines.filter(engine => {
+                const id = engine.engine_id ?? "";
+                const name = engine.name ?? "";
+                return id.toLowerCase().includes("embedding") || name.toLowerCase().includes("embedding");
+            }).length;
+            llmCount = data.engines.filter(engine => {
+                const id = engine.engine_id ?? "";
+                const name = engine.name ?? "";
+                return !(
+                    id.toLowerCase().includes("embedding") ||
+                    name.toLowerCase().includes("embedding")
+                );
+            }).length;
         }
 
-    } catch (error) {
-        console.error('Failed to fetch engine data:', error);
+        const embedTotalEl = document.getElementById("ModelEmbedTotal");
+        if (embedTotalEl) {
+            embedTotalEl.textContent = String(embedCount);
+        }
+        const llmTotalEl = document.getElementById("ModelLLMTotal");
+        if (llmTotalEl) {
+            llmTotalEl.textContent = String(llmCount);
+        }
+    } catch (err) {
+        console.error("[ModelData] fetch failed:", err);
+    }
+
+    for (const id of ids) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        const label = el.querySelector("h2");
+        try {
+            const status = data?.status ?? "";
+            el.classList.remove("badge-disable", "badge-success", "badge-danger");
+            if (status.toLowerCase() === "healthy") {
+                if (label) label.textContent = "Online";
+                el.classList.add("badge-success");
+            } else {
+                if (label) label.textContent = "Offline";
+                el.classList.add("badge-danger");
+            }
+        } catch (err) {
+            console.error("[ModelData] processing failed:", err);
+            if (label) label.textContent = "Offline";
+            el.classList.remove("badge-disable", "badge-success", "badge-danger");
+            el.classList.add("badge-danger");
+        }
     }
 }
 
 async function DocumentChunks() {
-    const card = document.getElementById('DocumentChunks');
-    const badge = card?.querySelector('.badge');
-    const badgeLabel = badge?.querySelector('h2');
+    const el = document.getElementById("DocumentChunksStatus");
+    if (!el) return;
+
+    const label = el.querySelector("h2");
+
     try {
-        const response = await fetch('http://20.62.11.249:8084/list_documents');
-        const responseData = await response.json();
-        const collection_name = responseData.collection_name;
-        const total_count = responseData.total_count;
+        const res = await loadingFetch("http://172.200.176.206:8084/list_documents");
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
-        if (!collection_name || typeof total_count !== 'number') return;
+        const data = await res.json();
 
-        if (badge && badgeLabel) {
-            badge.classList.remove('badge-danger');
-            badge.classList.add('badge-success');
-            badgeLabel.textContent = 'Connected';
+        const collectionEl = document.getElementById("DocumentChunksCollection");
+        if (collectionEl) {
+            collectionEl.textContent = data?.collection_name ?? "-";
         }
 
-        if (!card) return;
+        const totalEl = document.getElementById("DocumentChunksTotal");
+        if (totalEl) {
+            totalEl.textContent = (typeof data?.total_count === "number") ? String(data.total_count) : "0";
+        }
 
-        const detailContainer = card.querySelector('.card-detail');
-        if (detailContainer) {
-            detailContainer.innerHTML = `
-                <p class="text-12px reguler">Collection: ${collection_name}</p>
-                <p class="text-12px reguler">Total documents: ${total_count}</p>
-            `;
+        el.classList.remove("badge-disable", "badge-success", "badge-danger");
+        if ((typeof data === 'object' && data !== null && data.hasOwnProperty('collection_name'))) {
+            if (label) label.textContent = "Connected";
+            el.classList.add("badge-success");
+        } else {
+            if (label) label.textContent = "Disconnected";
+            el.classList.add("badge-danger");
         }
-    } catch (error) {
-        if (badge && badgeLabel) {
-            badge.classList.remove('badge-success');
-            badge.classList.add('badge-danger');
-            badgeLabel.textContent = 'Disconnected';
-        }
-        console.error('Failed to fetch document chunks:', error);
+    } catch (err) {
+        console.error("[DocumentChunks] fetch failed:", err);
+        if (label) label.textContent = "Disconnected";
+        el.classList.remove("badge-disable", "badge-success", "badge-danger");
+        el.classList.add("badge-danger");
     }
 }
 
-function RefreshData() {
-    const refreshBtn = document.getElementById('RefreshData');
-    if (!refreshBtn) return;
+async function DoclingStatus() {
+    const el = document.getElementById("DoclingStatus");
+    if (!el) return;
 
-    refreshBtn.addEventListener('click', GetData);
+    const label = el.querySelector("h2");
+
+    try {
+        const res = await loadingFetch("http://172.200.176.206:8082/health");
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+        const data = await res.json();
+        const status = data?.status ?? "";
+
+        el.classList.remove("badge-disable", "badge-success", "badge-danger");
+        if (status.toLowerCase() === "ok") {
+            if (label) label.textContent = "Online";
+            el.classList.add("badge-success");
+        } else {
+            if (label) label.textContent = "Offline";
+            el.classList.add("badge-danger");
+        }
+    } catch (err) {
+        console.error("[DoclingStatus] fetch failed:", err);
+        if (label) label.textContent = "Offline";
+        el.classList.remove("badge-disable", "badge-success", "badge-danger");
+        el.classList.add("badge-danger");
+    }
 }
 
+async function MarkItDownStatus() {
+    const el = document.getElementById("MarkItDownStatus");
+    if (!el) return;
 
-GetData();
+    const label = el.querySelector("h2");
+    const serviceEl = document.getElementById("MarkItDownService");
+
+    try {
+        const res = await loadingFetch("http://172.200.176.206:8081/health");
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+        const data = await res.json();
+
+        if (serviceEl) {
+            serviceEl.textContent = data?.service ?? "";
+        }
+
+        el.classList.remove("badge-disable", "badge-success", "badge-danger");
+        if ((data?.status ?? "").toLowerCase() === "healthy") {
+            if (label) label.textContent = "Online";
+            el.classList.add("badge-success");
+        } else {
+            if (label) label.textContent = "Offline";
+            el.classList.add("badge-danger");
+        }
+    } catch (err) {
+        console.error("[MarkItDownStatus] fetch failed:", err);
+        if (label) label.textContent = "Offline";
+        if (serviceEl) {
+            serviceEl.textContent = "";
+        }
+        el.classList.remove("badge-disable", "badge-success", "badge-danger");
+        el.classList.add("badge-danger");
+    }
+}
+
+async function RefreshData(event) {
+    if (event?.type === "click") {
+        const btn = document.getElementById("RefreshData");
+        const icon = btn?.querySelector("i");
+        if (icon) {
+            if (icon.getAnimations) {
+                icon.getAnimations().forEach(a => a.cancel());
+            }
+            icon.animate(
+                [
+                    { transform: "rotate(0deg)" },
+                    { transform: "rotate(360deg)" }
+                ],
+                { duration: 500, easing: "ease", fill: "forwards" }
+            );
+        }
+    }
+    const btn = document.getElementById("RefreshData");
+    if (btn && btn.onclick !== RefreshData) {
+        btn.onclick = RefreshData;
+    }
+
+    Toast("Loading...");
+
+    await runAllChecks();
+
+    const el = document.getElementById("RefreshDataTime");
+    if (el) {
+        const d = new Date();
+        let h = d.getHours();
+        const m = String(d.getMinutes()).padStart(2, "0");
+        const s = String(d.getSeconds()).padStart(2, "0");
+        const ampm = h >= 12 ? "PM" : "AM";
+        h = h % 12;
+        if (h === 0) h = 12;
+        el.textContent = `Last updated ${h}:${m}:${s} ${ampm}`;
+    }
+}
+
+async function runAllChecks() {
+    return await Promise.allSettled([
+        DocumentChunks(),
+        DoclingStatus(),
+        MarkItDownStatus(),
+        ModelData(),
+    ]);
+}
+
 RefreshData();
-DocumentChunks();

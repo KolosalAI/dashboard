@@ -28,17 +28,15 @@
                     </div>
                     <div class="card-body">
                         <h3 class="text-14px reguler">Status:</h3>
-                        <div class="badge" id="ModelAvailabilityLLM">
+                        <div class="badge badge-disable" id="ModelLLMStatus">
                             <div class="indicator"></div>
                             <h2 class="text-12px medium"></h2>
                         </div>
                     </div>
                     <div class="card-model">
                         <i class="ri-sparkling-2-fill"></i>
-                        <h4 class="text-14px reguler" id="ModelNameLLM">-</h4>
-                        <div class="badge badge-disable">
-                            <h2 class="text-12px medium" id="ModelStatusLLM">-</h2>
-                        </div>
+                        <h4 class="text-14px reguler"><span id="ModelLLMTotal"></span> model available</h4>
+                        <a class="btn-sm btn-secondary" href="/engine.html">See All</a>
                     </div>
                 </div> 
                 <div class="card">
@@ -50,17 +48,15 @@
                     </div>
                     <div class="card-body">
                         <h3 class="text-14px reguler">Status:</h3>
-                        <div class="badge" id="ModelAvailabilityEmbedded">
+                        <div class="badge badge-disable" id="ModelEmbedStatus">
                             <div class="indicator"></div>
                             <h2 class="text-12px medium"></h2>
                         </div>
                     </div>
                     <div class="card-model">
                         <i class="ri-sparkling-2-fill"></i>
-                        <h4 class="text-14px reguler" id="ModelNameEmbedded">-</h4>
-                        <div class="badge badge-disable">
-                            <h2 class="text-12px medium" id="ModelStatusEmbedded">-</h2>
-                        </div>
+                        <h4 class="text-14px reguler"><span id="ModelEmbedTotal"></span> model available</h4>
+                        <a class="btn-sm btn-secondary" href="/engine.html">See All</a>
                     </div>
                 </div> 
                 <div class="discord">
@@ -81,14 +77,14 @@
                     </div>
                     <div class="card-body">
                         <h3 class="text-14px reguler">Status:</h3>
-                        <div class="badge badge-success">
+                        <div class="badge badge-disable" id="ModelParserStatus">
                             <div class="indicator"></div>
-                            <h2 class="text-12px medium">Online</h2>
+                            <h2 class="text-12px medium"></h2>
                         </div>
                     </div>
                     <div class="card-detail">
-                        <p class="text-12px reguler">Service: markitdown-api</p>
-                        <p class="text-12px reguler">Port: 8081</p>
+                        <p class="text-12px reguler">Service: kolosal-server</p>
+                        <p class="text-12px reguler">Port: 8084</p>
                     </div>
                 </div>
                 <div class="card">
@@ -100,13 +96,13 @@
                     </div>
                     <div class="card-body">
                         <h3 class="text-14px reguler">Status:</h3>
-                        <div class="badge badge-success">
+                        <div class="badge badge-disable" id="MarkItDownStatus">
                             <div class="indicator"></div>
-                            <h2 class="text-12px medium">Online</h2>
+                            <h2 class="text-12px medium"></h2>
                         </div>
                     </div>
                     <div class="card-detail">
-                        <p class="text-12px reguler">Service: markitdown-api</p>
+                        <p class="text-12px reguler">Service: <span id="MarkItDownService"></span></p>
                         <p class="text-12px reguler">Port: 8081</p>
                     </div>
                 </div>
@@ -119,14 +115,14 @@
                     </div>
                     <div class="card-body">
                         <h3 class="text-14px reguler">Status:</h3>
-                        <div class="badge badge-success">
+                        <div class="badge badge-disable" id="DoclingStatus">
                             <div class="indicator"></div>
-                            <h2 class="text-12px medium">Online</h2>
+                            <h2 class="text-12px medium"></h2>
                         </div>
                     </div>
                     <div class="card-detail">
-                        <p class="text-12px reguler">Service: markitdown-api</p>
-                        <p class="text-12px reguler">Port: 8081</p>
+                        <p class="text-12px reguler">Service: docling-api</p>
+                        <p class="text-12px reguler">Port: 8082</p>
                     </div>
                 </div>
                 <div class="card" id="DocumentChunks">
@@ -138,12 +134,15 @@
                     </div>
                     <div class="card-body">
                         <h3 class="text-14px reguler">Status:</h3>
-                        <div class="badge">
+                        <div class="badge badge-disable" id="DocumentChunksStatus">
                             <div class="indicator"></div>
                             <h2 class="text-12px medium"></h2>
                         </div>
                     </div>
-                    <div class="card-detail"></div>
+                    <div class="card-detail">
+                        <p class="text-12px reguler">Collection: <span id="DocumentChunksCollection"></span></p>
+                        <p class="text-12px reguler">Total: <span id="DocumentChunksTotal"></span></p>
+                    </div>
                 </div>
             </div>
         </div>

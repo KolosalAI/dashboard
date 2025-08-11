@@ -403,7 +403,7 @@ sidebar {
     display: flex;
 }
 
-/* component: badget */
+/* component: badge */
 .badge {
     display: flex;
     justify-content: flex-start;

@@ -40,7 +40,7 @@ function renderModelList(models, filterType) {
                 .join(', ');
             const availability = model.available ? 'Online' : 'Offline';
             const availabilityClass = model.available ? 'badge-success' : 'badge-danger';
-            const statusText = model.status === 'unloaded' ? 'Sleeping' : 'Active';
+            const statusText = model.status === 'unloaded' ? 'Unloaded' : 'Loaded';
             const statusClass = model.status === 'unloaded' ? 'badge-disable' : 'badge-success';
 
             const item = document.createElement('div');
