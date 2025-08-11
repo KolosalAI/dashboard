@@ -34,7 +34,7 @@ function ItemContentAccordion() {
 async function FetchDocument() {
     try {
         Toast('Loading...');
-        const res = await fetch('http://172.200.176.206:8084/list_documents');
+        const res = await fetch('http://20.62.11.249:8084/list_documents');
         const idData = await res.json();
         const documentIds = idData.document_ids;
 
@@ -47,7 +47,7 @@ async function FetchDocument() {
             return;
         }
 
-        const resInfo = await fetch('http://172.200.176.206:8084/info_documents', {
+        const resInfo = await fetch('http://20.62.11.249:8084/info_documents', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

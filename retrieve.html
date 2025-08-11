@@ -18,26 +18,26 @@
                 <div class="search">
                     <div class="text-area">
                         <h2 class="text-12px reguler">Search Query</h2>
-                        <textarea placeholder="Enter your query here..."></textarea>
+                        <textarea placeholder="Enter your query here..." id="RetrieveQuery"></textarea>
                     </div>
                     <div class="col">
                         <div class="input-text">
                             <h2 class="text-12px reguler">Result limit</h2>
-                            <input type="number" placeholder="Result limit" value="10">
+                            <input type="number" placeholder="Result limit" value="10" id="ResultLimit">
                         </div>
                         <div class="input-text">
                             <h2 class="text-12px reguler">Score Threshold (0.0-1.0)</h2>
-                            <input type="number" placeholder="Score Threshold" value="0.2">
+                            <input type="number" placeholder="Score Threshold" value="0.2" id="ScoreThreshold">
                         </div>
                     </div>
-                    <button class="btn-lg btn-primary"><i class="ri-search-2-line"></i>Search Documents</button>
+                    <button class="btn-lg btn-primary retrieve-action"><i class="ri-search-2-line"></i>Search Documents</button>
                 </div>
                 <div class="list">
                     <div class="list-title">
                         <div class="col">
-                            <h2 class="text-14px reguler">Result: 10 items</h2>
+                            <h2 class="text-14px reguler">Result: <span id="CountDocument">0</span> items</h2>
                             <div class="divider"></div>
-                            <h3 class="text-14px reguler"><i class="ri-time-line"></i>0s</h3>
+                            <h3 class="text-14px reguler"><i class="ri-time-line"></i><span id="TimeSearch">0s</span></h3>
                         </div>
                         <div class="badge badge-disable">
                             <h2 class="text-12px reguler">Query: "none"</h2>
@@ -47,11 +47,13 @@
                         <h3 class="text-14px medium">No search has been made yet</h3>
                         <p class="text-12px reguler">Use the search bar above to find documents from your uploaded collection.</p>
                     </div>
+                    <div class="list-content"></div>
                 </div>
             </div>
         </div>
     </main>
 
+    <script type="module" src="script/retrieve.js"></script>
     <script type="module" src="script/component.js"></script>
 </body>
 </html>
