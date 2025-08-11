@@ -43,8 +43,31 @@ function ModelList(data) {
             document.querySelectorAll('.tab .btn-sm').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             ModelList(modelData);
+            const tabType = btn.textContent.trim().toLowerCase();
+            const url = new URL(window.location);
+            url.searchParams.set('tab', tabType);
+            window.history.replaceState({}, '', url);
         });
     });
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const tabParam = urlParams.get('tab');
+    if (tabParam) {
+        const tabLower = tabParam.toLowerCase();
+        document.querySelectorAll('.tab .btn-sm').forEach(btn => {
+            if (btn.textContent.trim().toLowerCase() === tabLower) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+    } else {
+        document.querySelectorAll('.tab .btn-sm').forEach(btn => btn.classList.remove('active'));
+        const llmBtn = Array.from(document.querySelectorAll('.tab .btn-sm')).find(btn => btn.textContent.trim().toLowerCase() === 'llm');
+        if (llmBtn) {
+            llmBtn.classList.add('active');
+        }
+    }
 
     const activeTabBtn = document.querySelector('.tab .btn-sm.active');
     const activeTabText = activeTabBtn ? activeTabBtn.textContent.trim() : "";
