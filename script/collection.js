@@ -34,14 +34,20 @@ function ItemContentAccordion() {
 async function FetchDocument() {
     try {
         Toast('Loading...');
-        const res = await fetch('http://20.62.11.249:8084/list_documents');
+        const res = await fetch('http://172.200.176.206:8084/list_documents');
         const idData = await res.json();
         const documentIds = idData.document_ids;
 
         const countEl = document.getElementById('CountDocument');
         if (countEl) countEl.textContent = documentIds.length;
 
-        const resInfo = await fetch('http://20.62.11.249:8084/info_documents', {
+        if (!documentIds || documentIds.length === 0) {
+            cachedDocuments = [];
+            ListDocument();
+            return;
+        }
+
+        const resInfo = await fetch('http://172.200.176.206:8084/info_documents', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -61,7 +67,7 @@ async function FetchDocument() {
 
         const now = new Date();
         const formattedTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-        const timeDisplay = document.getElementById('RefreshTime');
+        const timeDisplay = document.getElementById('RefreshDataTime');
         if (timeDisplay) {
             timeDisplay.textContent = `Last updated ${formattedTime}`;
         }
@@ -109,7 +115,7 @@ function ListDocument() {
                         <h2 class="text-12px medium">${doc.id}</h2>
                     </div>
                 </div>
-                <button class="btn-sm-icon btn-secondary"><i class="ri-delete-bin-line"></i></button>
+                <button class="btn-sm-icon btn-secondary" id="DeleteDocument"><i class="ri-delete-bin-line"></i></button>
                 <button class="btn-sm-icon btn-secondary accordion-action"><i class="ri-arrow-down-s-line"></i></button>
             </div>
             <div class="item-body">
@@ -137,6 +143,13 @@ function ListDocument() {
         `;
 
         container.appendChild(item);
+
+        const deleteBtn = item.querySelector('#DeleteDocument');
+        if (deleteBtn) {
+            deleteBtn.addEventListener('click', () => {
+                DeleteDocument(doc.id);
+            });
+        }
     });
 
     ItemAccordion();
@@ -157,12 +170,35 @@ function SortDocument() {
 }
 
 function RefreshCollection() {
-    const refreshBtn = document.getElementById('RefreshCollection');
+    const refreshBtn = document.getElementById('RefreshData');
     if (!refreshBtn) return;
 
     refreshBtn.addEventListener('click', () => {
         FetchDocument();
     });
+}
+
+async function DeleteDocument(documentId) {
+    try {
+        const response = await fetch('http://172.200.176.206:8084/remove_documents', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                collection_name: "documents",
+                document_ids: [documentId],
+                total_count: 1
+            })
+        });
+        if (response.ok) {
+            Toast('Document deleted successfully');
+            cachedDocuments = cachedDocuments.filter(doc => doc.id !== documentId);
+            ListDocument();
+        }
+    } catch (error) {
+        Toast('Failed to delete data');
+    }
 }
 
 FetchDocument();

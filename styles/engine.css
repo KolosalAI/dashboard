@@ -133,7 +133,6 @@
 }
 
 .list-blank {
-    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -163,7 +162,6 @@
 
     .col {
         display: flex;
-        flex-direction: column;
         gap: 8px;
         flex: 1 0 0;
 
