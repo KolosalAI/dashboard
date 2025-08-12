@@ -200,7 +200,71 @@ function ParameterToggle() {
     }
 }
 
-async function InitModels() {
+function InitSearchModel() {
+    const input = document.getElementById("InputModelId");
+    const searchModel = document.querySelector(".search-model");
+
+    if (!input || !searchModel) return;
+
+    input.addEventListener("input", async () => {
+        if (input.value.trim().length >= 2) {
+            try {
+                const resp = await fetch(`https://huggingface.co/api/models?search=${encodeURIComponent(input.value.trim())}&limit=5`);
+                if (!resp.ok) throw new Error("Failed to fetch models");
+                const models = await resp.json();
+                while (searchModel.firstChild) {
+                    searchModel.removeChild(searchModel.firstChild);
+                }
+                if (Array.isArray(models)) {
+                    for (const model of models) {
+                        const item = document.createElement("div");
+                        item.className = "item";
+                        item.innerHTML = `
+                            <div class="item-title">
+                                <h3 class="text-12px reguler">${model.id}</h3>
+                                <i class="ri-arrow-down-s-line"></i>
+                            </div>
+                            <div class="item-body">
+                                <h4 class="text-12px reguler">Available GGFU files:</h4>
+                                <div class="ggfu-item">
+                                    <h5 class="text-12px reguler">Llama-3.2-1B-Instruct-Q4_K_M.gguf</h5>
+                                    <p class="text-12px reguler">3GB</p>
+                                    <button class="btn-xs btn-secondary">Select</button>
+                                </div>
+                            </div>
+                        `;
+                        item.addEventListener("click", function() {
+                            const body = this.querySelector('.item-body');
+                            if (this.classList.contains('active')) {
+                                this.classList.remove('active');
+                                if (body) body.style.display = 'none';
+                            } else {
+                                searchModel.querySelectorAll('.item').forEach(i => {
+                                    i.classList.remove('active');
+                                    const b = i.querySelector('.item-body');
+                                    if (b) b.style.display = 'none';
+                                });
+                                this.classList.add('active');
+                                if (body) body.style.display = 'flex';
+                            }
+                        });
+                        searchModel.appendChild(item);
+                    }
+                }
+                searchModel.style.display = "flex";
+            } catch (err) {
+                while (searchModel.firstChild) {
+                    searchModel.removeChild(searchModel.firstChild);
+                }
+                searchModel.style.display = "none";
+            }
+        } else {
+            searchModel.style.display = "none";
+        }
+    });
+}
+
+async function InitFetchData() {
     Toast("Loading...");
     modelData = await FetchData();
     ModelInfo(modelData);
@@ -208,5 +272,6 @@ async function InitModels() {
     RefreshData(true);
 }
 
-InitModels();
+InitFetchData();
 ParameterToggle();
+InitSearchModel();
