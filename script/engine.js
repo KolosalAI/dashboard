@@ -289,6 +289,10 @@ async function InitSearchModel() {
                             btn.addEventListener('click', () => {
                                 const formattedId = model.id.replace('/', '_');
                                 document.getElementById("InputModelId").value = formattedId;
+                                const fileName = btn.closest('.ggfu-item')?.querySelector('h5')?.textContent.trim();
+                                if (fileName) {
+                                    document.getElementById("InputModelPath").value = `https://huggingface.co/${model.id}/resolve/main/${fileName}`;
+                                }
                                 searchModel.style.display = "none";
                             });
                         });
