@@ -104,6 +104,30 @@ function Dropdown() {
         });
     });
 
+    document.querySelectorAll('.dropdown').forEach(dropdown => {
+        const isFormDropdown = dropdown.querySelector('.dropdown-trigger.dropdown-form');
+        const triggerText = isFormDropdown?.querySelector('h3');
+        const list = dropdown.querySelector('.dropdown-list');
+        const items = dropdown.querySelectorAll('.dropdown-item');
+
+        items.forEach(item => {
+            item.addEventListener('click', e => {
+                if (isFormDropdown) {
+                    // For dropdown-form, prevent navigation and update label
+                    e.preventDefault();
+                    const selectedText = item.querySelector('h2')?.textContent?.trim() || '';
+                    if (triggerText && selectedText) {
+                        triggerText.textContent = selectedText;
+                    }
+                }
+                // Close the dropdown in both cases
+                if (list) list.classList.remove('show');
+                const triggerBtn = dropdown.querySelector('.dropdown-trigger');
+                if (triggerBtn) triggerBtn.classList.remove('active');
+            });
+        });
+    });
+
     document.addEventListener('click', function (e) {
         document.querySelectorAll('.dropdown').forEach(dropdown => {
             if (!dropdown.contains(e.target)) {

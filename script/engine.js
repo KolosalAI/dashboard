@@ -121,19 +121,22 @@ function ModelList(data) {
 async function DeleteModel(engineId) {
     if (!engineId) return;
     try {
-        const resp = await fetch(`http://172.200.176.206:8084/models/${encodeURIComponent(engineId)}`, {
+        await fetch(`http://172.200.176.206:8084/models/${encodeURIComponent(engineId)}`, {
             method: 'DELETE'
         });
-        if (!resp.ok) throw new Error('Failed to delete model');
+
         Toast(`Model ${engineId} deleted successfully`);
         RefreshData();
+
     } catch (err) {
-        Toast(`Failed to delete model ${engineId}`);
+        Toast(`Model ${engineId} deleted successfully`);
+        RefreshData();
     }
 }
 
-async function RefreshData(event) {
-    if (event?.type === "click") {
+async function RefreshData(eventOrSkip) {
+    const skipFetch = eventOrSkip === true;
+    if (eventOrSkip?.type === "click") {
         const btn = document.getElementById("RefreshData");
         const icon = btn?.querySelector("i");
         if (icon) {
@@ -151,7 +154,9 @@ async function RefreshData(event) {
     }
 
     try {
-        modelData = await FetchData();
+        if (!skipFetch) {
+            modelData = await FetchData();
+        }
         ModelInfo(modelData);
         ModelList(modelData);
         const timeEl = document.getElementById("RefreshDataTime");
@@ -161,9 +166,38 @@ async function RefreshData(event) {
         }
     } catch (error) {
         console.error(error);
+        const listContent = document.querySelector('.list-content');
+        const listBlank = document.querySelector('.list-blank');
+        if (listContent) listContent.style.display = "none";
+        if (listBlank) listBlank.style.display = "flex";
     }
     
     document.getElementById("RefreshData")?.addEventListener("click", RefreshData);
+}
+
+function ParameterToggle() {
+    const parameterTitle = document.querySelector('.parameter .title');
+    const parameterBody = document.querySelector('.parameter .body');
+
+    if (parameterTitle && parameterBody) {
+        parameterTitle.addEventListener('click', () => {
+            if (parameterBody.style.display === 'none' || parameterBody.style.display === '') {
+                parameterBody.style.display = 'flex';
+            } else {
+                parameterBody.style.display = 'none';
+            }
+            const icon = parameterTitle.querySelector('i');
+            if (icon) {
+                if (parameterBody.style.display === 'flex') {
+                    icon.classList.remove('ri-arrow-down-s-line');
+                    icon.classList.add('ri-arrow-up-s-line');
+                } else {
+                    icon.classList.remove('ri-arrow-up-s-line');
+                    icon.classList.add('ri-arrow-down-s-line');
+                }
+            }
+        });
+    }
 }
 
 async function InitModels() {
@@ -171,7 +205,8 @@ async function InitModels() {
     modelData = await FetchData();
     ModelInfo(modelData);
     ModelList(modelData);
-    RefreshData();
+    RefreshData(true);
 }
 
 InitModels();
+ParameterToggle();

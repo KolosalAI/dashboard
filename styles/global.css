@@ -292,6 +292,8 @@ sidebar {
 .btn-ghost {
     border: none;
     outline: none;
+    background-color: transparent;
+    color: var(--color-text);
 }
 
 .btn-ghost:hover {
