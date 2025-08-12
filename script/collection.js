@@ -34,7 +34,7 @@ function ItemContentAccordion() {
 async function FetchDocument() {
     try {
         Toast('Loading...');
-        const res = await fetch('http://20.62.11.249:8084/list_documents');
+        const res = await fetch('http://172.200.176.206:8084/list_documents');
         const idData = await res.json();
         const documentIds = idData.document_ids;
 
@@ -47,7 +47,7 @@ async function FetchDocument() {
             return;
         }
 
-        const resInfo = await fetch('http://20.62.11.249:8084/info_documents', {
+        const resInfo = await fetch('http://172.200.176.206:8084/info_documents', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -110,7 +110,7 @@ function ListDocument() {
         item.innerHTML = `
             <div class="item-title">
                 <div class="col">
-                    <h2 class="text-14px reguler">Document - ${currentSort === 'latest' ? sortedDocs.length - index : index + 1}</h2>
+                    <h2 class="text-14px reguler">Document ${currentSort === 'latest' ? sortedDocs.length - index : index + 1}</h2>
                     <div class="badge badge-disable">
                         <h2 class="text-12px medium">${doc.id}</h2>
                     </div>
@@ -195,6 +195,8 @@ async function DeleteDocument(documentId) {
             Toast('Document deleted successfully');
             cachedDocuments = cachedDocuments.filter(doc => doc.id !== documentId);
             ListDocument();
+            const countEl = document.getElementById('CountDocument');
+            if (countEl) countEl.textContent = cachedDocuments.length;
         }
     } catch (error) {
         Toast('Failed to delete data');

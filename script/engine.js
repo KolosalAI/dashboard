@@ -96,12 +96,12 @@ function ModelList(data) {
                                 <h2 class="text-12px medium">${statusCap}</h2>
                             </div>
                         </div>
-                        <div class="btn-sm-icon btn-danger" id="DeleteModel"><i class="ri-delete-bin-line"></i></div>
+                        <div class="btn-sm-icon btn-secondary delete-model"><i class="ri-delete-bin-line"></i></div>
                     </div>
                 `;
             }
 
-            document.querySelectorAll('.btn-sm-icon.btn-danger').forEach(btn => {
+            document.querySelectorAll('.delete-model').forEach(btn => {
                 btn.addEventListener('click', () => {
                     const engineId = btn.closest('.model-item')?.querySelector('.col h2')?.textContent.trim();
                     DeleteModel(engineId);
@@ -121,14 +121,14 @@ function ModelList(data) {
 async function DeleteModel(engineId) {
     if (!engineId) return;
     try {
-        const resp = await fetch(`http://172.200.176.206:8084/engines/${encodeURIComponent(engineId)}`, {
+        const resp = await fetch(`http://172.200.176.206:8084/models/${encodeURIComponent(engineId)}`, {
             method: 'DELETE'
         });
         if (!resp.ok) throw new Error('Failed to delete model');
-        console.log(`Model ${engineId} deleted successfully`);
+        Toast(`Model ${engineId} deleted successfully`);
         RefreshData();
     } catch (err) {
-        console.error(`Failed to delete model ${engineId}`, err);
+        Toast(`Failed to delete model ${engineId}`);
     }
 }
 
