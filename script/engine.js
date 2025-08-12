@@ -234,7 +234,9 @@ async function InitSearchModel() {
                 searchModel.innerHTML = "";
 
                 if (Array.isArray(models)) {
-                    for (const model of models.slice(0, 5)) {
+                    const slicedModels = models.slice(0, 5);
+
+                    const items = await Promise.all(slicedModels.map(async (model) => {
                         let ggfu = `<p class="text-12px reguler">No .gguf files found.</p>`;
                         try {
                             const treeResp = await fetch(`https://huggingface.co/api/models/${encodeURIComponent(model.id)}/tree/main`, { signal: currentController.signal });
@@ -257,7 +259,9 @@ async function InitSearchModel() {
                                 }
                             }
                         } catch (err) {
-                            ggfu = `<p class="text-12px reguler">Error loading .gguf files.</p>`;
+                            if (err?.name !== "AbortError") {
+                                ggfu = `<p class="text-12px reguler">Error loading .gguf files.</p>`;
+                            }
                         }
 
                         const item = document.createElement("div");
@@ -272,20 +276,25 @@ async function InitSearchModel() {
                                 ${ggfu}
                             </div>
                         `;
+                        return { model, item };
+                    }));
 
-                        const itemBody = item.querySelector('.item-body');
-                        AccordionSearchModel(item, itemBody);
-
+                    items.forEach(({ item }) => {
                         searchModel.appendChild(item);
+                    });
 
-                        item.querySelectorAll('.ggfu-item button').forEach(btn => {
+                    items.forEach(({ model, item }) => {
+                        const itemBody = item.querySelector('.item-body');
+                        itemBody.querySelectorAll('.ggfu-item button').forEach(btn => {
                             btn.addEventListener('click', () => {
                                 const formattedId = model.id.replace('/', '_');
                                 document.getElementById("InputModelId").value = formattedId;
                                 searchModel.style.display = "none";
                             });
                         });
-                    }
+                        AccordionSearchModel(item, itemBody);
+                    });
+
                 }
 
                 searchModel.style.display = "flex";
