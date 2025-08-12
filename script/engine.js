@@ -293,9 +293,19 @@ async function InitSearchModel() {
                                 if (fileName) {
                                     document.getElementById("InputModelPath").value = `https://huggingface.co/${model.id}/resolve/main/${fileName}`;
                                 }
+                                
+                                const modelTypeEl = document.getElementById("InputModelType");
+                                if (modelTypeEl) {
+                                    if (model.id.toLowerCase().includes("embedding")) {
+                                        modelTypeEl.textContent = "Embedding (Text Vectorization)";
+                                    } else {
+                                        modelTypeEl.textContent = "LLM (Text Generation)";
+                                    }
+                                }
                                 searchModel.style.display = "none";
                             });
                         });
+                        
                         AccordionSearchModel(item, itemBody);
                     });
 

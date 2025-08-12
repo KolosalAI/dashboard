@@ -81,7 +81,7 @@
                     <div class="dropdown">
                         <h4 class="text-12px reguler">Model Type:</h4>
                         <div class="dropdown-trigger dropdown-form">
-                            <h3 class="text-14px reguler">Select model</h3>
+                            <h3 class="text-14px reguler" id="InputModelType">Select model</h3>
                             <i class="ri-arrow-down-s-line"></i>
                         </div>
                         <div class="dropdown-list">
@@ -102,24 +102,24 @@
                     <div class="dropdown">
                         <h4 class="text-12px reguler">Inference engine:</h4>
                         <div class="dropdown-trigger dropdown-form">
-                            <h3 class="text-14px reguler">Select chunking type</h3>
+                            <h3 class="text-14px reguler">llama-cpu</h3>
                             <i class="ri-arrow-down-s-line"></i>
                         </div>
                         <div class="dropdown-list">
                             <a class="dropdown-item" href="#">
-                                <h2 class="text-14px reguler">Ilama CPU</h2>
+                                <h2 class="text-14px reguler">llama-cpu</h2>
                             </a>
                             <a class="dropdown-item" href="#">
-                                <h2 class="text-14px reguler">Ilama GPU</h2>
+                                <h2 class="text-14px reguler">llama-gpu</h2>
                             </a>
                         </div>
                     </div>
                     <div class="input-text">
                         <h2 class="text-12px reguler">Main GPU ID</h2>
-                        <input type="number" placeholder="0" value="1">
+                        <input type="number" placeholder="0" value="-1">
                     </div>
                     <div class="checkbox" style="margin-top: 20px;">
-                        <input type="checkbox">
+                        <input type="checkbox" checked>
                         <h2 class="text-14px medium">Load Immediately</h2>
                     </div>
                 </div>
@@ -151,11 +151,11 @@
                         </div>
                         <div class="col-2">
                             <div class="checkbox">
-                                <input type="checkbox">
+                                <input type="checkbox" checked>
                                 <h2 class="text-14px medium">Use Memory Mapping</h2>
                             </div>
                             <div class="checkbox">
-                                <input type="checkbox">
+                                <input type="checkbox" checked>
                                 <h2 class="text-14px medium">Perform Warmup</h2>
                             </div>
                         </div>
