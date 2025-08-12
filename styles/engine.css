@@ -213,6 +213,8 @@
     border: 1px solid var(--color-stroke);
     border-radius: 8px;
     margin-top: 68px;
+    height: 264px;
+    overflow-y: scroll;
 
     .item {
         cursor: pointer;

@@ -200,23 +200,66 @@ function ParameterToggle() {
     }
 }
 
-function InitSearchModel() {
+async function InitSearchModel() {
     const input = document.getElementById("InputModelId");
     const searchModel = document.querySelector(".search-model");
+    let debounceTimeout;
+    let currentController = null;
+    let lastRequestId = 0;
 
     if (!input || !searchModel) return;
 
-    input.addEventListener("input", async () => {
-        if (input.value.trim().length >= 2) {
+    input.addEventListener("input", () => {
+        clearTimeout(debounceTimeout);
+
+        debounceTimeout = setTimeout(async () => {
+            const query = input.value.trim();
+
+            if (query.length < 2) {
+                searchModel.style.display = "none";
+                return;
+            }
+
+            const requestId = ++lastRequestId;
+            if (currentController) currentController.abort();
+            currentController = new AbortController();
+
             try {
-                const resp = await fetch(`https://huggingface.co/api/models?search=${encodeURIComponent(input.value.trim())}&limit=5`);
+                const resp = await fetch(`https://huggingface.co/api/models?search=${encodeURIComponent(query)}&limit=5`, { signal: currentController.signal });
                 if (!resp.ok) throw new Error("Failed to fetch models");
                 const models = await resp.json();
-                while (searchModel.firstChild) {
-                    searchModel.removeChild(searchModel.firstChild);
-                }
+
+                if (requestId !== lastRequestId) return;
+
+                searchModel.innerHTML = "";
+
                 if (Array.isArray(models)) {
-                    for (const model of models) {
+                    for (const model of models.slice(0, 5)) {
+                        let ggfu = `<p class="text-12px reguler">No .gguf files found.</p>`;
+                        try {
+                            const treeResp = await fetch(`https://huggingface.co/api/models/${encodeURIComponent(model.id)}/tree/main`, { signal: currentController.signal });
+                            if (treeResp.ok) {
+                                const treeData = await treeResp.json();
+                                const ggufFiles = treeData.filter(entry => entry.path?.toLowerCase().endsWith(".gguf"));
+                                if (ggufFiles.length > 0) {
+                                    ggfu = ggufFiles.map(file => {
+                                        const fileName = file.path.split("/").pop();
+                                        const sizeBytes = file.lfs?.size || file.size || 0;
+                                        const sizeGB = (sizeBytes / (1024 ** 3)).toFixed(2);
+                                        return `
+                                            <div class="ggfu-item">
+                                                <h5 class="text-12px reguler">${fileName}</h5>
+                                                <p class="text-12px reguler">${sizeGB} GB</p>
+                                                <button class="btn-xs btn-secondary">Select</button>
+                                            </div>
+                                        `;
+                                    }).join("");
+                                }
+                            }
+                        } catch (err) {
+                            ggfu = `<p class="text-12px reguler">Error loading .gguf files.</p>`;
+                        }
+
                         const item = document.createElement("div");
                         item.className = "item";
                         item.innerHTML = `
@@ -224,42 +267,68 @@ function InitSearchModel() {
                                 <h3 class="text-12px reguler">${model.id}</h3>
                                 <i class="ri-arrow-down-s-line"></i>
                             </div>
-                            <div class="item-body">
+                            <div class="item-body" style="display: none;">
                                 <h4 class="text-12px reguler">Available GGFU files:</h4>
-                                <div class="ggfu-item">
-                                    <h5 class="text-12px reguler">Llama-3.2-1B-Instruct-Q4_K_M.gguf</h5>
-                                    <p class="text-12px reguler">3GB</p>
-                                    <button class="btn-xs btn-secondary">Select</button>
-                                </div>
+                                ${ggfu}
                             </div>
                         `;
-                        item.addEventListener("click", function() {
-                            const body = this.querySelector('.item-body');
-                            if (this.classList.contains('active')) {
-                                this.classList.remove('active');
-                                if (body) body.style.display = 'none';
-                            } else {
-                                searchModel.querySelectorAll('.item').forEach(i => {
-                                    i.classList.remove('active');
-                                    const b = i.querySelector('.item-body');
-                                    if (b) b.style.display = 'none';
-                                });
-                                this.classList.add('active');
-                                if (body) body.style.display = 'flex';
-                            }
-                        });
+
+                        const itemBody = item.querySelector('.item-body');
+                        AccordionSearchModel(item, itemBody);
+
                         searchModel.appendChild(item);
+
+                        item.querySelectorAll('.ggfu-item button').forEach(btn => {
+                            btn.addEventListener('click', () => {
+                                const formattedId = model.id.replace('/', '_');
+                                document.getElementById("InputModelId").value = formattedId;
+                                searchModel.style.display = "none";
+                            });
+                        });
                     }
                 }
+
                 searchModel.style.display = "flex";
             } catch (err) {
-                while (searchModel.firstChild) {
-                    searchModel.removeChild(searchModel.firstChild);
+                if (err?.name !== "AbortError") {
+                    searchModel.innerHTML = "";
+                    searchModel.style.display = "none";
                 }
-                searchModel.style.display = "none";
             }
-        } else {
+        }, 300);
+    });
+
+    document.addEventListener("mousedown", (e) => {
+        if (!searchModel.contains(e.target) && !input.contains(e.target)) {
+            setTimeout(() => {
+                searchModel.style.display = "none";
+            }, 300);
+        }
+    });
+
+    input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
             searchModel.style.display = "none";
+        }
+    });
+}
+
+function AccordionSearchModel(item, itemBody) {
+    const itemTitle = item.querySelector('.item-title');
+    itemTitle.addEventListener('click', () => {
+        document.querySelectorAll('.search-model .item').forEach(otherItem => {
+            if (otherItem !== item) {
+                const otherBody = otherItem.querySelector('.item-body');
+                if (otherBody) otherBody.style.display = 'none';
+                otherItem.classList.remove('active');
+            }
+        });
+        if (itemBody.style.display === 'none' || itemBody.style.display === '') {
+            itemBody.style.display = 'flex';
+            item.classList.add('active');
+        } else {
+            itemBody.style.display = 'none';
+            item.classList.remove('active');
         }
     });
 }
