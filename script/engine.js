@@ -305,7 +305,7 @@ async function InitSearchModel() {
                                 searchModel.style.display = "none";
                             });
                         });
-                        
+
                         AccordionSearchModel(item, itemBody);
                     });
 
@@ -356,6 +356,54 @@ function AccordionSearchModel(item, itemBody) {
     });
 }
 
+function AddModel() {
+    document.querySelector(".add-model-action")?.addEventListener("click", async () => {
+        const data = {
+            modelId: document.getElementById("InputModelId")?.value.trim(),
+            
+            modelType: (() => {
+                const raw = document.getElementById("InputModelType")?.textContent.trim();
+                if (raw === "LLM (Text Generation)") return "llm";
+                if (raw === "Embedding (Text Vectorization)") return "embedding";
+                return raw || "";
+            })(),
+
+            modelPath: document.getElementById("InputModelPath")?.value.trim(),
+            modelInference: document.getElementById("InputModelInference")?.textContent.trim(),
+            modelGPU: parseInt(document.getElementById("InputModelGPU")?.value.trim() || "-1"),
+            modelLoad: document.getElementById("InputModelLoad")?.checked,
+            modelContext: parseInt(document.getElementById("InputModelContext")?.value.trim() || "0"),
+            modelBatch: parseInt(document.getElementById("InputModelBatch")?.value.trim() || "0"),
+            modelLayer: parseInt(document.getElementById("InputModelLayer")?.value.trim() || "0"),
+            modelParallel: parseInt(document.getElementById("InputModelParallel")?.value.trim() || "0"),
+            modelMemory: document.getElementById("InputModelMemory")?.checked,
+            modelPerform: document.getElementById("InputModelPerform")?.checked
+        };
+
+        try {
+            const postResp = await fetch("http://172.200.176.206:8084/models", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            });
+            if (!postResp.ok) {
+                console.error("Error posting model data:", postResp.status, await postResp.text());
+            } else {
+                console.log("Model added:", data);
+            }
+
+            const statusResp = await fetch("http://172.200.176.206:8084/status");
+            console.log("Server Status:", statusResp.ok ? await statusResp.json() : await statusResp.text());
+
+            const downloadsResp = await fetch("http://172.200.176.206:8084/downloads");
+            console.log("Download Status:", downloadsResp.ok ? await downloadsResp.json() : await downloadsResp.text());
+
+        } catch (error) {
+            console.error("Error in AddModel flow:", error);
+        }
+    });
+}
+
 async function InitFetchData() {
     Toast("Loading...");
     modelData = await FetchData();
@@ -367,3 +415,4 @@ async function InitFetchData() {
 InitFetchData();
 ParameterToggle();
 InitSearchModel();
+AddModel();
