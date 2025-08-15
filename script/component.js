@@ -38,7 +38,7 @@ function Header() {
     header.innerHTML = `
         <h1 class="text-14px medium">${title}</h1>
         <div class="col">
-            <a class="btn-md btn-secondary" href="#">Feedback</a>
+            <a class="btn-md btn-secondary" href="#"><i class="ri-feedback-line" style="color: #FFF !important;"></i>Feedback</a>
             <div class="dropdown">
                 <a class="btn-md-icon btn-secondary dropdown-trigger" href="#"><i class="ri-book-2-line" style="color: #FFF !important;"></i></a>
                 <div class="dropdown-list">
