@@ -2,12 +2,6 @@ import { Toast } from "./component.js";
 
 let modelData = null;
 
-async function FetchData() {
-    const resp = await fetch('http://172.200.176.206:8084/status');
-    if (!resp.ok) throw new Error('Network response was not ok');
-    return await resp.json();
-}
-
 function ModelInfo(data) {
     const totalModelEl = document.getElementById('TotalModel');
     const loadedModelEl = document.getElementById('LoadedModel');
@@ -30,6 +24,24 @@ function ModelInfo(data) {
                 <h3 class="text-14px medium">Disabled</h3>
             `;
         }
+    }
+}
+
+async function FetchData() {
+    try {
+        const resp = await fetch('http://172.200.176.206:8084/status');
+        if (!resp.ok) throw new Error('Network response was not ok');
+        return await resp.json();
+    } catch (error) {
+        console.error("FetchData error:", error);
+        const listContent = document.querySelector('.list-content');
+        const listBlank = document.querySelector('.list-blank');
+        if (listContent) listContent.style.display = "none";
+        if (listBlank) {
+            listBlank.style.removeProperty("display");
+            listBlank.style.setProperty("display", "flex", "important");
+        }
+        throw error;
     }
 }
 
@@ -378,7 +390,6 @@ function AddModel() {
             model_perform: document.getElementById("InputModelPerform")?.checked
         };
 
-        // Validasi wajib
         if (!data.model_id || !data.model_path) {
             Toast("Model ID dan Model Path wajib diisi");
             return;
@@ -394,6 +405,7 @@ function AddModel() {
                 console.error("Error posting model data:", postResp.status, await postResp.text());
             } else {
                 console.log("Model added:", data);
+                location.reload();
             }
 
             const statusResp = await fetch("http://172.200.176.206:8084/status");
