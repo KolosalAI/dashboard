@@ -359,26 +359,30 @@ function AccordionSearchModel(item, itemBody) {
 function AddModel() {
     document.querySelector(".add-model-action")?.addEventListener("click", async () => {
         const data = {
-            modelId: document.getElementById("InputModelId")?.value.trim(),
-            
-            modelType: (() => {
+            model_id: document.getElementById("InputModelId")?.value.trim(),
+            model_type: (() => {
                 const raw = document.getElementById("InputModelType")?.textContent.trim();
                 if (raw === "LLM (Text Generation)") return "llm";
                 if (raw === "Embedding (Text Vectorization)") return "embedding";
                 return raw || "";
             })(),
-
-            modelPath: document.getElementById("InputModelPath")?.value.trim(),
-            modelInference: document.getElementById("InputModelInference")?.textContent.trim(),
-            modelGPU: parseInt(document.getElementById("InputModelGPU")?.value.trim() || "-1"),
-            modelLoad: document.getElementById("InputModelLoad")?.checked,
-            modelContext: parseInt(document.getElementById("InputModelContext")?.value.trim() || "0"),
-            modelBatch: parseInt(document.getElementById("InputModelBatch")?.value.trim() || "0"),
-            modelLayer: parseInt(document.getElementById("InputModelLayer")?.value.trim() || "0"),
-            modelParallel: parseInt(document.getElementById("InputModelParallel")?.value.trim() || "0"),
-            modelMemory: document.getElementById("InputModelMemory")?.checked,
-            modelPerform: document.getElementById("InputModelPerform")?.checked
+            model_path: document.getElementById("InputModelPath")?.value.trim(),
+            model_inference: document.getElementById("InputModelInference")?.textContent.trim(),
+            model_gpu: parseInt(document.getElementById("InputModelGPU")?.value.trim() || "-1"),
+            model_load: document.getElementById("InputModelLoad")?.checked,
+            model_context: parseInt(document.getElementById("InputModelContext")?.value.trim() || "0"),
+            model_batch: parseInt(document.getElementById("InputModelBatch")?.value.trim() || "0"),
+            model_layer: parseInt(document.getElementById("InputModelLayer")?.value.trim() || "0"),
+            model_parallel: parseInt(document.getElementById("InputModelParallel")?.value.trim() || "0"),
+            model_memory: document.getElementById("InputModelMemory")?.checked,
+            model_perform: document.getElementById("InputModelPerform")?.checked
         };
+
+        // Validasi wajib
+        if (!data.model_id || !data.model_path) {
+            Toast("Model ID dan Model Path wajib diisi");
+            return;
+        }
 
         try {
             const postResp = await fetch("http://172.200.176.206:8084/models", {
