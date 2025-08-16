@@ -116,7 +116,7 @@ async function DoclingStatus() {
     const label = el.querySelector("h2");
 
     try {
-        const res = await loadingFetch("http://172.200.176.206:8082/health");
+        const res = await loadingFetch("https://api.kolosal.ai/health");
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
         const data = await res.json();
@@ -146,7 +146,7 @@ async function MarkItDownStatus() {
     const serviceEl = document.getElementById("MarkItDownService");
 
     try {
-        const res = await loadingFetch("http://172.200.176.206:8081/health");
+        const res = await loadingFetch("https://api.kolosal.ai/health");
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
         const data = await res.json();
