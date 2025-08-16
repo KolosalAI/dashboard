@@ -29,7 +29,7 @@ function ModelInfo(data) {
 
 async function FetchData() {
     try {
-        const resp = await fetch('http://172.200.176.206:8084/status');
+        const resp = await fetch('https://api.kolosal.ai/status');
         if (!resp.ok) throw new Error('Network response was not ok');
         return await resp.json();
     } catch (error) {
@@ -133,7 +133,7 @@ function ModelList(data) {
 async function DeleteModel(engineId) {
     if (!engineId) return;
     try {
-        await fetch(`http://172.200.176.206:8084/models/${encodeURIComponent(engineId)}`, {
+        await fetch(`https://api.kolosal.ai/models/${encodeURIComponent(engineId)}`, {
             method: 'DELETE'
         });
 
@@ -396,7 +396,7 @@ function AddModel() {
         }
 
         try {
-            const postResp = await fetch("http://172.200.176.206:8084/models", {
+            const postResp = await fetch("https://api.kolosal.ai/models", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data)
@@ -408,10 +408,10 @@ function AddModel() {
                 location.reload();
             }
 
-            const statusResp = await fetch("http://172.200.176.206:8084/status");
+            const statusResp = await fetch("https://api.kolosal.ai/status");
             console.log("Server Status:", statusResp.ok ? await statusResp.json() : await statusResp.text());
 
-            const downloadsResp = await fetch("http://172.200.176.206:8084/downloads");
+            const downloadsResp = await fetch("https://api.kolosal.ai/downloads");
             console.log("Download Status:", downloadsResp.ok ? await downloadsResp.json() : await downloadsResp.text());
 
         } catch (error) {

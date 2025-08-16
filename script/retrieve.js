@@ -10,7 +10,7 @@ async function RetrieveList() {
 
         try {
             const startTime = performance.now();
-            const response = await fetch('http://172.200.176.206:8084/retrieve', {
+            const response = await fetch('https://api.kolosal.ai/retrieve', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

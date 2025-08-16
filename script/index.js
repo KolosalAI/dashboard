@@ -10,7 +10,7 @@ async function ModelData() {
         "ModelEmbedStatus",
         "ModelParserStatus"
     ];
-    const URL = "http://172.200.176.206:8084/status";
+    const URL = "https://api.kolosal.ai/status";
 
     let embedCount = 0;
     let llmCount = 0;
@@ -78,7 +78,7 @@ async function DocumentChunks() {
     const label = el.querySelector("h2");
 
     try {
-        const res = await loadingFetch("http://172.200.176.206:8084/list_documents");
+        const res = await loadingFetch("https://api.kolosal.ai/list_documents");
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
         const data = await res.json();
