@@ -237,7 +237,7 @@ async function InitSearchModel() {
             currentController = new AbortController();
 
             try {
-                const resp = await fetch(`https://huggingface.co/api/models?search=${encodeURIComponent(query)}&limit=5`, { signal: currentController.signal });
+                const resp = await fetch(`https://huggingface.co/api/models?search=${encodeURIComponent(query)}&limit=50`, { signal: currentController.signal });
                 if (!resp.ok) throw new Error("Failed to fetch models");
                 const models = await resp.json();
 
@@ -246,7 +246,7 @@ async function InitSearchModel() {
                 searchModel.innerHTML = "";
 
                 if (Array.isArray(models)) {
-                    const slicedModels = models.slice(0, 5);
+                    const slicedModels = models.slice(0, 50);
 
                     const items = await Promise.all(slicedModels.map(async (model) => {
                         let ggfu = `<p class="text-12px reguler">No .gguf files found.</p>`;
