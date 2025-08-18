@@ -46,5 +46,30 @@ function ConfigInteraction() {
     }
 }
 
+function AddDocument() {
+    const btn = document.querySelector(".add-document");
+    btn.addEventListener("click", () => {
+        document.querySelectorAll("#SelectParser h2, #SelectParser h3, #SelectChunking h2, #SelectChunking h3").forEach(h => {
+            h.textContent = h.textContent.trim();
+            console.log(h.textContent);
+        });
+
+        const scoreInput = document.querySelector("#ScoreThreshold input");
+        if (scoreInput) {
+            console.log(scoreInput.value.trim());
+        }
+
+        const activeItem = document.querySelector(".form-doc-list .item.active h4");
+        if (activeItem) {
+            const docType = activeItem.textContent.trim().toLowerCase();
+            const mapped = "parse_" + docType; 
+            console.log(mapped);
+        } else {
+            console.log("No document type selected");
+        }
+    });
+}
+
 CategoryDocument();
 ConfigInteraction();
+AddDocument();

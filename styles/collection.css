@@ -159,6 +159,7 @@
     align-items: center;
     justify-content: center;
     height: calc(100% - 48px);
+    width: 100%;
 
     p {
         color: var(--color-subtitle);

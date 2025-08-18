@@ -165,7 +165,6 @@ function ModelList(data) {
         }
     }
 
-    // blank state only if both engines and downloads are empty
     if (filteredEngines.length === 0 && (!data.active_downloads || data.active_downloads.length === 0)) {
         listContent.style.display = "none";
         if (listBlank) listBlank.style.display = "flex";
@@ -181,7 +180,6 @@ async function DeleteModel(engineId) {
 
         Toast(`Model ${engineId} deleted successfully`);
         RefreshData();
-
     } catch (err) {
         Toast(`Model ${engineId} deleted successfully`);
         RefreshData();
