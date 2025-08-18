@@ -101,7 +101,7 @@ function ModelList(data) {
                 let statusCap = status ? status.charAt(0).toUpperCase() + status.slice(1).toLowerCase() : "-";
                 let badgeClass = status.toLowerCase() === "loaded" ? 'badge-success' : 'badge-disable';
                 listContent.innerHTML += `
-                    <div class="model-item">
+                    <div class="model-item" data-engine-id="${engine.engine_id || ""}">
                         <div class="col">
                             <h2 class="text-14px reguler">${engine.engine_id || ""}</h2>
                             <div class="badge ${badgeClass}">
@@ -391,30 +391,37 @@ function AddModel() {
         };
 
         if (!data.model_id || !data.model_path) {
-            Toast("Model ID dan Model Path wajib diisi");
+            Toast("Model ID and Path are required.");
             return;
         }
 
         try {
+            const statusResp = await fetch("https://api.kolosal.ai/status");
+            if (!statusResp.ok) {
+                Toast("Server is unavailable. Please try again later.");
+                return;
+            }
+            Toast("Server is active. Adding model...");
+            await statusResp.json();
+
             const postResp = await fetch("https://api.kolosal.ai/models", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data)
             });
+
             if (!postResp.ok) {
-                console.error("Error posting model data:", postResp.status, await postResp.text());
-            } else {
-                console.log("Model added:", data);
-                location.reload();
+                Toast("Failed to add model. Please check your input and try again.");
+                return;
             }
 
-            const statusResp = await fetch("https://api.kolosal.ai/status");
-            console.log("Server Status:", statusResp.ok ? await statusResp.json() : await statusResp.text());
-
-            const downloadsResp = await fetch("https://api.kolosal.ai/downloads");
-            console.log("Download Status:", downloadsResp.ok ? await downloadsResp.json() : await downloadsResp.text());
-
+            Toast("Model " + data.model_id + " has been added successfully.");
+            RefreshData();
+            
+            const popup = document.querySelector(".popup");
+            if (popup) popup.classList.remove("show");
         } catch (error) {
+            Toast("An error occurred while adding the model. Please try again.");
             console.error("Error in AddModel flow:", error);
         }
     });
