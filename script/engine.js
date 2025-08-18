@@ -1,6 +1,18 @@
 import { Toast } from "./component.js";
 
+
 let modelData = null;
+
+async function FetchData() {
+    try {
+        const resp = await fetch("https://api.kolosal.ai/status");
+        if (!resp.ok) throw new Error("Failed to fetch status");
+        return await resp.json();
+    } catch (err) {
+        console.error("FetchData error:", err);
+        return { engines: [], node_manager: {} };
+    }
+}
 
 function ModelInfo(data) {
     const totalModelEl = document.getElementById('TotalModel');
@@ -27,21 +39,28 @@ function ModelInfo(data) {
     }
 }
 
-async function FetchData() {
+async function FetchDownloads(loop = false) {
     try {
-        const resp = await fetch('https://api.kolosal.ai/status');
-        if (!resp.ok) throw new Error('Network response was not ok');
-        return await resp.json();
-    } catch (error) {
-        console.error("FetchData error:", error);
-        const listContent = document.querySelector('.list-content');
-        const listBlank = document.querySelector('.list-blank');
-        if (listContent) listContent.style.display = "none";
-        if (listBlank) {
-            listBlank.style.removeProperty("display");
-            listBlank.style.setProperty("display", "flex", "important");
+        const resp = await fetch("https://api.kolosal.ai/downloads");
+        if (!resp.ok) throw new Error("Failed to fetch downloads");
+        const data = await resp.json();
+
+        if (loop && modelData) {
+            modelData.active_downloads = data.active_downloads || [];
+            ModelList(modelData);
+
+            if (modelData.active_downloads.length > 0) {
+                setTimeout(() => FetchDownloads(true), 2000);
+            }
         }
-        throw error;
+
+        return data;
+    } catch (err) {
+        console.error("FetchDownloads error:", err);
+        if (loop) {
+            setTimeout(() => FetchDownloads(true), 2000);
+        }
+        return { active_downloads: [] };
     }
 }
 
@@ -84,47 +103,70 @@ function ModelList(data) {
     const activeTabBtn = document.querySelector('.tab .btn-sm.active');
     const activeTabText = activeTabBtn ? activeTabBtn.textContent.trim() : "";
 
+    let filteredEngines = [];
     if (data.engines && Array.isArray(data.engines) && data.engines.length > 0) {
-        let filteredEngines = data.engines;
+        filteredEngines = data.engines;
         if (activeTabText === "Embedding") {
             filteredEngines = data.engines.filter(engine => (engine.engine_id || "").toLowerCase().includes("embedding"));
         } else if (activeTabText === "LLM") {
             filteredEngines = data.engines.filter(engine => !((engine.engine_id || "").toLowerCase().includes("embedding")));
         }
+    }
 
-        if (filteredEngines.length > 0) {
-            listContent.style.display = "";
-            if (listBlank) listBlank.style.display = "none";
-            listContent.innerHTML = "";
-            for (const engine of filteredEngines) {
-                let status = (engine.status || "").toString();
-                let statusCap = status ? status.charAt(0).toUpperCase() + status.slice(1).toLowerCase() : "-";
-                let badgeClass = status.toLowerCase() === "loaded" ? 'badge-success' : 'badge-disable';
-                listContent.innerHTML += `
-                    <div class="model-item" data-engine-id="${engine.engine_id || ""}">
-                        <div class="col">
-                            <h2 class="text-14px reguler">${engine.engine_id || ""}</h2>
-                            <div class="badge ${badgeClass}">
-                                <h2 class="text-12px medium">${statusCap}</h2>
-                            </div>
+    if (filteredEngines.length > 0) {
+        listContent.style.display = "";
+        if (listBlank) listBlank.style.display = "none";
+        listContent.innerHTML = "";
+        for (const engine of filteredEngines) {
+            let status = (engine.status || "").toString();
+            let statusCap = status ? status.charAt(0).toUpperCase() + status.slice(1).toLowerCase() : "-";
+            let badgeClass = status.toLowerCase() === "loaded" ? 'badge-success' : 'badge-disable';
+            listContent.innerHTML += `
+                <div class="model-item" data-engine-id="${engine.engine_id || ""}">
+                    <div class="col">
+                        <h2 class="text-14px reguler">${engine.engine_id || ""}</h2>
+                        <div class="badge ${badgeClass}">
+                            <h2 class="text-12px medium">${statusCap}</h2>
                         </div>
-                        <div class="btn-sm-icon btn-secondary delete-model"><i class="ri-delete-bin-line"></i></div>
                     </div>
-                `;
-            }
-
-            document.querySelectorAll('.delete-model').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const engineId = btn.closest('.model-item')?.querySelector('.col h2')?.textContent.trim();
-                    DeleteModel(engineId);
-                });
-            });
-
-        } else {
-            listContent.style.display = "none";
-            if (listBlank) listBlank.style.display = "flex";
+                    <div class="btn-sm-icon btn-secondary delete-model"><i class="ri-delete-bin-line"></i></div>
+                </div>
+            `;
         }
+
+        document.querySelectorAll('.delete-model').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const engineId = btn.closest('.model-item')?.querySelector('.col h2')?.textContent.trim();
+                DeleteModel(engineId);
+            });
+        });
     } else {
+        listContent.innerHTML = "";
+        listContent.style.display = "none";
+        if (listBlank) listBlank.style.display = "none";
+    }
+
+    if (data.active_downloads && data.active_downloads.length > 0) {
+        listContent.style.display = "";
+        if (listBlank) listBlank.style.display = "none";
+        for (const dl of data.active_downloads) {
+            const pct = dl.progress?.percentage?.toFixed(2) || 0;
+            listContent.innerHTML += `
+                <div class="model-item downloading" data-engine-id="${dl.model_id}">
+                    <div class="col">
+                        <h2 class="text-14px reguler">${dl.model_id}</h2>
+                        <div class="badge badge-warning">
+                            <h2 class="text-12px medium">Downloading</h2>
+                        </div>
+                    </div>
+                    <h2 class="text-14px reguler download-progress">${pct}%</h2>
+                </div>
+            `;
+        }
+    }
+
+    // blank state only if both engines and downloads are empty
+    if (filteredEngines.length === 0 && (!data.active_downloads || data.active_downloads.length === 0)) {
         listContent.style.display = "none";
         if (listBlank) listBlank.style.display = "flex";
     }
@@ -168,9 +210,13 @@ async function RefreshData(eventOrSkip) {
     try {
         if (!skipFetch) {
             modelData = await FetchData();
+            const downloads = await FetchDownloads();
+            modelData.active_downloads = downloads.active_downloads || [];
         }
+
         ModelInfo(modelData);
         ModelList(modelData);
+
         const timeEl = document.getElementById("RefreshDataTime");
         if (timeEl) {
             const now = new Date();
@@ -237,7 +283,10 @@ async function InitSearchModel() {
             currentController = new AbortController();
 
             try {
-                const resp = await fetch(`https://huggingface.co/api/models?search=${encodeURIComponent(query)}&limit=50`, { signal: currentController.signal });
+                const resp = await fetch(
+                    `https://huggingface.co/api/models?search=${encodeURIComponent(query)}&filter=gguf&sort=trendingScore&limit=50&full=true&config=true`,
+                    { signal: currentController.signal }
+                );
                 if (!resp.ok) throw new Error("Failed to fetch models");
                 const models = await resp.json();
 
@@ -401,6 +450,7 @@ function AddModel() {
                 Toast("Server is unavailable. Please try again later.");
                 return;
             }
+
             Toast("Server is active. Adding model...");
             await statusResp.json();
 
@@ -416,10 +466,7 @@ function AddModel() {
             }
 
             Toast("Model " + data.model_id + " has been added successfully.");
-            RefreshData();
-            
-            const popup = document.querySelector(".popup");
-            if (popup) popup.classList.remove("show");
+            window.location.reload();
         } catch (error) {
             Toast("An error occurred while adding the model. Please try again.");
             console.error("Error in AddModel flow:", error);
@@ -439,3 +486,4 @@ InitFetchData();
 ParameterToggle();
 InitSearchModel();
 AddModel();
+FetchDownloads(true);
