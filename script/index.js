@@ -123,7 +123,7 @@ async function DoclingStatus() {
         const status = data?.status ?? "";
 
         el.classList.remove("badge-disable", "badge-success", "badge-danger");
-        if (status.toLowerCase() === "ok") {
+        if (status.toLowerCase() === "healthy") {
             if (label) label.textContent = "Online";
             el.classList.add("badge-success");
         } else {

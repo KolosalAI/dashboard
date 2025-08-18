@@ -63,6 +63,9 @@ function Header() {
 function Dropdown() {
     document.querySelectorAll('.dropdown-trigger').forEach(trigger => {
         trigger.addEventListener('click', function (e) {
+            if (this.classList.contains('disable')) {
+                return;
+            }
             e.preventDefault();
             const dropdown = this.closest('.dropdown');
             const list = dropdown.querySelector('.dropdown-list');

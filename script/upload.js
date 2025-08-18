@@ -1,4 +1,4 @@
-function DocumentType() {
+function CategoryDocument() {
     const docItems = document.querySelectorAll('.form-doc-list .item');
     docItems.forEach(item => {
         item.addEventListener('click', () => {
@@ -17,4 +17,34 @@ function DocumentType() {
     }
 }
 
-DocumentType();
+function ConfigInteraction() {
+    const parser = document.querySelector("#SelectParser h3");
+    const chunking = document.getElementById("SelectChunking");
+    if (parser && chunking) {
+        const observer = new MutationObserver(() => {
+            const val = parser.textContent.trim();
+            if (["Kolosal Parser", "MarkItDown", "Docling"].includes(val)) {
+                chunking.classList.remove("disable");
+            } else {
+                chunking.classList.add("disable");
+            }
+        });
+        observer.observe(parser, { childList: true, characterData: true, subtree: true });
+    }
+
+    const chunkingTitle = document.querySelector("#SelectChunking h3");
+    const scoreThreshold = document.getElementById("ScoreThreshold");
+    if (chunkingTitle && scoreThreshold) {
+        const observer2 = new MutationObserver(() => {
+            if (chunkingTitle.textContent.trim() === "Semantic Chunking") {
+                scoreThreshold.classList.remove("disable");
+            } else {
+                scoreThreshold.classList.add("disable");
+            }
+        });
+        observer2.observe(chunkingTitle, { childList: true, characterData: true, subtree: true });
+    }
+}
+
+CategoryDocument();
+ConfigInteraction();
