@@ -56,52 +56,56 @@
                                 </label>
                                 <input type="file" id="upload" name="document" class="input-file" accept=".pdf,.docx,.pptx,.xlsx,.html,.txt" hidden />
                             </div>
-                            <div class="form-wrapper">
-                                <div class="dropdown">
-                                    <h4 class="text-12px reguler">Parser</h4>
-                                    <div class="dropdown-trigger dropdown-form" id="SelectParser">
-                                        <h3 class="text-14px reguler">Select parser</h3>
-                                        <i class="ri-arrow-down-s-line"></i>
-                                    </div>
-                                    <div class="dropdown-list">
-                                        <a class="dropdown-item" href="#">
-                                            <h2 class="text-14px reguler">Kolosal Parser</h2>
-                                        </a>
-                                        <a class="dropdown-item" href="#">
-                                            <h2 class="text-14px reguler">MarkItDown</h2>
-                                        </a>
-                                        <a class="dropdown-item" href="#">
-                                            <h2 class="text-14px reguler">Docling</h2>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="dropdown">
-                                    <h4 class="text-12px reguler">Chunking Type</h4>
-                                    <div class="dropdown-trigger dropdown-form disable" id="SelectChunking">
-                                        <h3 class="text-14px reguler">Select chunking type</h3>
-                                        <i class="ri-arrow-down-s-line"></i>
-                                    </div>
-                                    <div class="dropdown-list">
-                                        <a class="dropdown-item" href="#">
-                                            <h2 class="text-14px reguler">Reguler Chunking</h2>
-                                        </a>
-                                        <a class="dropdown-item" href="#">
-                                            <h2 class="text-14px reguler">Semantic Chunking</h2>
-                                        </a>
-                                        <a class="dropdown-item" href="#">
-                                            <h2 class="text-14px reguler">No Chunking</h2>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="input-text disable" id="ScoreThreshold">
-                                    <h2 class="text-12px reguler">Score Threshold (0.0-1.0)</h2>
-                                    <input type="number" placeholder="Score Threshold" value="0.2">
-                                </div>   
-                            </div>
                         </div>
+                        <div class="form-wrapper">
+                            <div class="dropdown">
+                                <h4 class="text-12px reguler">Parser</h4>
+                                <div class="dropdown-trigger dropdown-form" id="SelectParser">
+                                    <h3 class="text-14px reguler">Select parser</h3>
+                                    <i class="ri-arrow-down-s-line"></i>
+                                </div>
+                                <div class="dropdown-list">
+                                    <a class="dropdown-item" href="#">
+                                        <h2 class="text-14px reguler">Kolosal Parser</h2>
+                                    </a>
+                                    <a class="dropdown-item" href="#">
+                                        <h2 class="text-14px reguler">MarkItDown</h2>
+                                    </a>
+                                    <a class="dropdown-item" href="#">
+                                        <h2 class="text-14px reguler">Docling</h2>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="dropdown">
+                                <h4 class="text-12px reguler">Chunking Type</h4>
+                                <div class="dropdown-trigger dropdown-form disable" id="SelectChunking">
+                                    <h3 class="text-14px reguler">Select chunking type</h3>
+                                    <i class="ri-arrow-down-s-line"></i>
+                                </div>
+                                <div class="dropdown-list">
+                                    <a class="dropdown-item" href="#">
+                                        <h2 class="text-14px reguler">Reguler Chunking</h2>
+                                    </a>
+                                    <a class="dropdown-item" href="#">
+                                        <h2 class="text-14px reguler">Semantic Chunking</h2>
+                                    </a>
+                                    <a class="dropdown-item" href="#">
+                                        <h2 class="text-14px reguler">No Chunking</h2>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="input-text disable" id="ScoreThreshold">
+                                <h2 class="text-12px reguler">Score Threshold (0.0-1.0)</h2>
+                                <input type="number" placeholder="Score Threshold" value="0.2">
+                            </div>   
+                        </div>
+                        <button class="btn-lg btn-secondary add-document">Process Document</button>
                     </div>
                 </div>
-                <button class="btn-lg btn-primary add-document">Process Document</button>
+            </div>
+            <div class="result">
+                <div class="result-chunking"></div>
+                <button class="btn-lg btn-primary add-to-collection">Add to Collection</button>
             </div>
         </div>
     </main>

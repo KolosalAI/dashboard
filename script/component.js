@@ -202,30 +202,64 @@ function HeadInitiate() {
 
 function InputUpload() {
     const inputFileDiv = document.querySelector(".input-file");
-    if (!inputFileDiv) return;
+    const fileInput = inputFileDiv?.querySelector("input[type=file]");
+    const label = inputFileDiv?.querySelector('label[for="upload"]');
+    if (!inputFileDiv || !fileInput || !label) return;
 
-    inputFileDiv.addEventListener("change", (e) => {
-        const fileInput = e.target;
-        if (fileInput.type === "file" && fileInput.files.length > 0) {
-            inputFileDiv.innerHTML = `
-                <h3 class="text-14px reguler">${fileInput.files[0].name}</h3>
-                <button class="btn-sm-icon btn-secondary delete-file"><i class="ri-delete-bin-line"></i></button>
-            `;
+    fileInput.addEventListener("change", () => {
+        if (fileInput.files.length > 0) {
+            fileInput.style.display = "none";
+            label.style.display = "none";
+
+            const fileName = document.createElement("h3");
+            fileName.className = "text-14px reguler";
+            fileName.textContent = fileInput.files[0].name;
+
+            const deleteBtn = document.createElement("button");
+            deleteBtn.className = "btn-sm-icon btn-secondary delete-file";
+            deleteBtn.innerHTML = `<i class="ri-delete-bin-line"></i>`;
+
+            inputFileDiv.appendChild(fileName);
+            inputFileDiv.appendChild(deleteBtn);
+
             inputFileDiv.classList.add("filled");
+            deleteBtn.addEventListener("click", () => {
+                fileInput.value = "";
+                fileInput.style.display = "block";
+                label.style.display = "block"; 
+                fileName.remove();
+                deleteBtn.remove();
+                inputFileDiv.classList.remove("filled");
+            });
         }
     });
+}
 
-    inputFileDiv.addEventListener("click", (e) => {
-        if (e.target.closest(".delete-file")) {
-            inputFileDiv.innerHTML = `
-                <label for="upload">
-                    <div class="icon"><i class="ri-upload-2-line"></i></div>
-                    <h3 class="text-12px reguler">Click to choose your files</h3>
-                </label>
-                <input type="file" id="upload" name="document" accept=".pdf,.docx,.pptx,.xlsx,.html,.txt" hidden />
-            `;
-            inputFileDiv.classList.remove("filled");
+export function ItemAccordion() {
+    const items = document.querySelectorAll('.item');
+
+    items.forEach(item => {
+        const toggleBtn = item.querySelector('.accordion-action');
+        const body = item.querySelector('.item-body');
+
+        if (toggleBtn && body) {
+            toggleBtn.addEventListener('click', () => {
+                body.classList.toggle('show');
+            });
         }
+    });
+}
+
+export function ItemContentAccordion() {
+    const items = document.querySelectorAll('.item-content');
+
+    items.forEach(item => {
+        const title = item.querySelector('.item-content-title');
+        const body = item.querySelector('.item-content-body');
+
+        title.addEventListener('click', () => {
+            body.classList.toggle('show');
+        });
     });
 }
 
