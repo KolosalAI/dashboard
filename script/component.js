@@ -200,7 +200,7 @@ function HeadInitiate() {
     document.head.appendChild(favicon16);
 }
 
-function InputUpload() {
+export function InputUpload() {
     const inputFileDiv = document.querySelector(".input-file");
     const fileInput = inputFileDiv?.querySelector("input[type=file]");
     const label = inputFileDiv?.querySelector('label[for="upload"]');
@@ -225,8 +225,8 @@ function InputUpload() {
             inputFileDiv.classList.add("filled");
             deleteBtn.addEventListener("click", () => {
                 fileInput.value = "";
-                fileInput.style.display = "block";
-                label.style.display = "block"; 
+                fileInput.style.display = "none";
+                label.style.display = "flex"; 
                 fileName.remove();
                 deleteBtn.remove();
                 inputFileDiv.classList.remove("filled");

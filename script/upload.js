@@ -1,4 +1,37 @@
-import { ItemAccordion, ItemContentAccordion } from "./component.js";
+import { InputUpload, ItemAccordion, ItemContentAccordion } from "./component.js";
+
+function resetForm() {
+    const inputFileWrapper = document.querySelector(".input-file");
+    if (inputFileWrapper) {
+        inputFileWrapper.innerHTML = `
+            <label for="upload">
+                <div class="icon"><i class="ri-upload-2-line"></i></div>
+                <h3 class="text-12px reguler">Click to choose your files</h3>
+            </label>
+            <input type="file" id="upload" name="document" class="input-file" accept=".pdf,.docx,.pptx,.xlsx,.html,.txt" hidden />
+        `;
+        inputFileWrapper.classList.remove("filled");
+
+        const fileInput = inputFileWrapper.querySelector("#upload");
+        if (fileInput) fileInput.value = "";
+
+        InputUpload();
+    }
+
+    const parserTitle = document.querySelector("#SelectParser h3");
+    if (parserTitle) parserTitle.textContent = "Select parser";
+
+    const chunkingTitle = document.querySelector("#SelectChunking h3");
+    if (chunkingTitle) chunkingTitle.textContent = "Select chunking type";
+
+    const scoreInput = document.querySelector("#ScoreThreshold input");
+    if (scoreInput) scoreInput.value = "0.2";
+
+    const resultContainer = document.querySelector(".result-chunking");
+    if (resultContainer) resultContainer.innerHTML = "";
+    const resultWrapper = document.querySelector(".result");
+    if (resultWrapper) resultWrapper.style.display = "none";
+}
 
 function CategoryDocument() {
     const docItems = document.querySelectorAll('.form-doc-list .item');
@@ -11,6 +44,7 @@ function CategoryDocument() {
             }
             item.classList.add('active');
             item.setAttribute('data-value', 'Selected');
+            resetForm();
         });
     });
     const defaultActive = document.querySelector('.form-doc-list .item.active');
@@ -77,9 +111,16 @@ function AddDocument() {
 
         try {
             let parsedResult = null;
-            if (document.querySelector("#SelectParser h3")?.textContent.trim() === "Kolosal Parser" && file && file.name.trim()) {
+            const parserVal = document.querySelector("#SelectParser h3")?.textContent.trim();
+            if (["Kolosal Parser", "MarkItDown", "Docling"].includes(parserVal) && file && file.name.trim()) {
+                let endpoint;
+                if (["Kolosal Parser", "MarkItDown"].includes(parserVal)) {
+                    endpoint = `https://api.kolosal.ai/parse_${docType}`;
+                } else if (parserVal === "Docling") {
+                    endpoint = "https://api.kolosal.ai/v1/convert/file";
+                }
                 const base64Data = await fileToBase64(file);
-                const parseResponse = await fetch("https://api.kolosal.ai/parse_pdf", {
+                const parseResponse = await fetch(endpoint, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
@@ -88,7 +129,11 @@ function AddDocument() {
                         fileName: file.name.trim()
                     })
                 });
-                if (!parseResponse.ok) throw new Error(`Parse request failed: ${parseResponse.status}`);
+                if (!parseResponse.ok) {
+                    const errorText = await parseResponse.text();
+                    console.error("Error response:", errorText);
+                    throw new Error(`Parse request failed: ${parseResponse.status}`);
+                }
                 parsedResult = await parseResponse.json();
             }
 
