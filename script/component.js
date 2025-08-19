@@ -200,8 +200,26 @@ function HeadInitiate() {
     document.head.appendChild(favicon16);
 }
 
+function InputUpload() {
+    const fileInput = document.querySelector(".input-file input[type='file']");
+    if (!fileInput) return;
+
+    const fileLabel = document.querySelector(".input-file h3");
+
+    fileInput.addEventListener("change", () => {
+        if (fileInput.files.length > 0) {
+            fileLabel.textContent = fileInput.files[0].name;
+            console.log("File input detected:", fileInput.files[0].name);
+        } else {
+            fileLabel.textContent = "Click to choose your files";
+            console.log("No file selected");
+        }
+    });
+}
+
 Sidebar();
 Header();
 Dropdown();
 Popup();
 HeadInitiate();
+InputUpload();
