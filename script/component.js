@@ -201,18 +201,30 @@ function HeadInitiate() {
 }
 
 function InputUpload() {
-    const fileInput = document.querySelector(".input-file input[type='file']");
-    if (!fileInput) return;
+    const inputFileDiv = document.querySelector(".input-file");
+    if (!inputFileDiv) return;
 
-    const fileLabel = document.querySelector(".input-file h3");
+    inputFileDiv.addEventListener("change", (e) => {
+        const fileInput = e.target;
+        if (fileInput.type === "file" && fileInput.files.length > 0) {
+            inputFileDiv.innerHTML = `
+                <h3 class="text-14px reguler">${fileInput.files[0].name}</h3>
+                <button class="btn-sm-icon btn-secondary delete-file"><i class="ri-delete-bin-line"></i></button>
+            `;
+            inputFileDiv.classList.add("filled");
+        }
+    });
 
-    fileInput.addEventListener("change", () => {
-        if (fileInput.files.length > 0) {
-            fileLabel.textContent = fileInput.files[0].name;
-            console.log("File input detected:", fileInput.files[0].name);
-        } else {
-            fileLabel.textContent = "Click to choose your files";
-            console.log("No file selected");
+    inputFileDiv.addEventListener("click", (e) => {
+        if (e.target.closest(".delete-file")) {
+            inputFileDiv.innerHTML = `
+                <label for="upload">
+                    <div class="icon"><i class="ri-upload-2-line"></i></div>
+                    <h3 class="text-12px reguler">Click to choose your files</h3>
+                </label>
+                <input type="file" id="upload" name="document" accept=".pdf,.docx,.pptx,.xlsx,.html,.txt" hidden />
+            `;
+            inputFileDiv.classList.remove("filled");
         }
     });
 }
