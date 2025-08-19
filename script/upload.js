@@ -1,4 +1,4 @@
-import { InputUpload, ItemAccordion, ItemContentAccordion } from "./component.js";
+import { InputUpload, ItemAccordion, ItemContentAccordion, Toast } from "./component.js";
 
 function resetForm() {
     const inputFileWrapper = document.querySelector(".input-file");
@@ -119,6 +119,7 @@ function AddDocument() {
                 } else if (parserVal === "Docling") {
                     endpoint = "https://api.kolosal.ai/v1/convert/file";
                 }
+                Toast("Loading...");
                 const base64Data = await fileToBase64(file);
                 const parseResponse = await fetch(endpoint, {
                     method: "POST",
@@ -186,6 +187,7 @@ function AddDocument() {
                     chunkingBody.threshold = threshold;
                 }
 
+                Toast("Loading...");
                 const chunkingResponse = await fetch("https://api.kolosal.ai/chunking", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -257,6 +259,7 @@ function AddToCollection(documents) {
     const newBtn = btn.cloneNode(true);
     btn.parentNode.replaceChild(newBtn, btn);
     newBtn.addEventListener("click", async () => {
+        Toast("Loading...");
         try {
             const response = await fetch("https://api.kolosal.ai/add_documents", {
                 method: "POST",
@@ -264,6 +267,8 @@ function AddToCollection(documents) {
                 body: JSON.stringify({ documents })
             });
             if (!response.ok) throw new Error(`Add to collection failed: ${response.status}`);
+            Toast("Documents added successfully");
+            location.reload();
         } catch (error) {
             console.error("Error adding documents to collection:", error);
         }
