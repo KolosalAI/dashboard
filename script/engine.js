@@ -121,6 +121,12 @@ function ModelList(data) {
             let status = (engine.status || "").toString();
             let statusCap = status ? status.charAt(0).toUpperCase() + status.slice(1).toLowerCase() : "-";
             let badgeClass = status.toLowerCase() === "loaded" ? 'badge-success' : 'badge-disable';
+            let deleteBtnHtml = '';
+            if (engine.engine_id === "qwen3-embedding-4b") {
+                deleteBtnHtml = `<div class="btn-sm-icon btn-secondary delete-model" style="display:none;"><i class="ri-delete-bin-line"></i></div>`;
+            } else {
+                deleteBtnHtml = `<div class="btn-sm-icon btn-secondary delete-model"><i class="ri-delete-bin-line"></i></div>`;
+            }
             listContent.innerHTML += `
                 <div class="model-item" data-engine-id="${engine.engine_id || ""}">
                     <div class="col">
@@ -129,7 +135,7 @@ function ModelList(data) {
                             <h2 class="text-12px medium">${statusCap}</h2>
                         </div>
                     </div>
-                    <div class="btn-sm-icon btn-secondary delete-model"><i class="ri-delete-bin-line"></i></div>
+                    ${deleteBtnHtml}
                 </div>
             `;
         }
