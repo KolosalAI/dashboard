@@ -1,4 +1,4 @@
-import { Toast } from "./component.js";
+import { ItemAccordion, ItemContentAccordion, Toast } from "./component.js";
 
 async function RetrieveList() {
     document.querySelector('.retrieve-action').addEventListener('click', async () => {
@@ -89,34 +89,6 @@ async function RetrieveList() {
         } catch (err) {
             console.error(err);
         }
-    });
-}
-
-function ItemAccordion() {
-    const items = document.querySelectorAll('.item');
-
-    items.forEach(item => {
-        const toggleBtn = item.querySelector('.accordion-action');
-        const body = item.querySelector('.item-body');
-
-        if (toggleBtn && body) {
-            toggleBtn.addEventListener('click', () => {
-                body.classList.toggle('show');
-            });
-        }
-    });
-}
-
-function ItemContentAccordion() {
-    const items = document.querySelectorAll('.item-content');
-
-    items.forEach(item => {
-        const title = item.querySelector('.item-content-title');
-        const body = item.querySelector('.item-content-body');
-
-        title.addEventListener('click', () => {
-            body.classList.toggle('show');
-        });
     });
 }
 
