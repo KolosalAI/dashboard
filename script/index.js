@@ -1,4 +1,5 @@
 import { Toast } from "./component.js";
+import { endpoints } from "./config.js";
 
 const loadingFetch = (typeof window !== "undefined" && window.loadingFetch)
   ? window.loadingFetch
@@ -10,7 +11,7 @@ async function ModelData() {
         "ModelEmbedStatus",
         "ModelParserStatus"
     ];
-    const URL = "https://api.kolosal.ai/status";
+    const URL = endpoints.status;
 
     let embedCount = 0;
     let llmCount = 0;
@@ -78,7 +79,7 @@ async function DocumentChunks() {
     const label = el.querySelector("h2");
 
     try {
-        const res = await loadingFetch("https://api.kolosal.ai/list_documents");
+    const res = await loadingFetch(endpoints.listDocuments);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
         const data = await res.json();
@@ -116,14 +117,14 @@ async function DoclingStatus() {
     const label = el.querySelector("h2");
 
     try {
-        const res = await loadingFetch("https://api.kolosal.ai/health");
+        const res = await loadingFetch(endpoints.doclingHealth);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
-        const data = await res.json();
-        const status = data?.status ?? "";
+    const data = await res.json();
+    const status = (data?.status ?? "").toLowerCase();
 
         el.classList.remove("badge-disable", "badge-success", "badge-danger");
-        if (status.toLowerCase() === "healthy") {
+    if (status === "healthy" || status === "ok") {
             if (label) label.textContent = "Online";
             el.classList.add("badge-success");
         } else {
@@ -146,17 +147,18 @@ async function MarkItDownStatus() {
     const serviceEl = document.getElementById("MarkItDownService");
 
     try {
-        const res = await loadingFetch("https://api.kolosal.ai/health");
+        const res = await loadingFetch(endpoints.markitdownHealth);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
-        const data = await res.json();
+    const data = await res.json();
 
         if (serviceEl) {
             serviceEl.textContent = data?.service ?? "";
         }
 
         el.classList.remove("badge-disable", "badge-success", "badge-danger");
-        if ((data?.status ?? "").toLowerCase() === "healthy") {
+    const st = (data?.status ?? "").toLowerCase();
+    if (st === "healthy" || st === "ok") {
             if (label) label.textContent = "Online";
             el.classList.add("badge-success");
         } else {

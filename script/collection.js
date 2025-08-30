@@ -1,4 +1,5 @@
 import { ItemAccordion, ItemContentAccordion, Toast } from "./component.js";
+import { endpoints } from "./config.js";
 
 let currentSort = 'latest'; 
 let cachedDocuments = [];
@@ -6,7 +7,7 @@ let cachedDocuments = [];
 async function FetchDocument() {
     try {
         Toast('Loading...');
-        const res = await fetch('https://api.kolosal.ai/list_documents');
+    const res = await fetch(endpoints.listDocuments);
         const idData = await res.json();
         const documentIds = idData.document_ids;
 
@@ -19,7 +20,7 @@ async function FetchDocument() {
             return;
         }
 
-        const resInfo = await fetch('https://api.kolosal.ai/info_documents', {
+    const resInfo = await fetch(endpoints.infoDocuments, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -152,7 +153,7 @@ function RefreshCollection() {
 
 async function DeleteDocument(documentId) {
     try {
-        const response = await fetch('https://api.kolosal.ai/remove_documents', {
+    const response = await fetch(endpoints.removeDocuments, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

@@ -1,4 +1,5 @@
 import { ItemAccordion, ItemContentAccordion, Toast } from "./component.js";
+import { endpoints } from "./config.js";
 
 async function RetrieveList() {
     document.querySelector('.retrieve-action').addEventListener('click', async () => {
@@ -10,7 +11,7 @@ async function RetrieveList() {
 
         try {
             const startTime = performance.now();
-            const response = await fetch('https://api.kolosal.ai/retrieve', {
+            const response = await fetch(endpoints.retrieve, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

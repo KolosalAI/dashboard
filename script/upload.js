@@ -1,4 +1,5 @@
 import { InputUpload, ItemAccordion, ItemContentAccordion, Toast } from "./component.js";
+import { endpoints } from "./config.js";
 
 function resetForm() {
     const inputFileWrapper = document.querySelector(".input-file");
@@ -113,29 +114,51 @@ function AddDocument() {
             let parsedResult = null;
             const parserVal = document.querySelector("#SelectParser h3")?.textContent.trim();
             if (["Kolosal Parser", "MarkItDown", "Docling"].includes(parserVal) && file && file.name.trim()) {
-                let endpoint;
-                if (["Kolosal Parser", "MarkItDown"].includes(parserVal)) {
-                    endpoint = `https://api.kolosal.ai/parse_${docType}`;
-                } else if (parserVal === "Docling") {
-                    endpoint = "https://api.kolosal.ai/v1/convert/file";
-                }
                 Toast("Loading...");
-                const base64Data = await fileToBase64(file);
-                const parseResponse = await fetch(endpoint, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        docType,
-                        data: base64Data,
-                        fileName: file.name.trim()
-                    })
-                });
-                if (!parseResponse.ok) {
-                    const errorText = await parseResponse.text();
-                    console.error("Error response:", errorText);
-                    throw new Error(`Parse request failed: ${parseResponse.status}`);
+                if (parserVal === "Docling") {
+                    // Docling expects multipart/form-data at /v1/convert/file
+                    const form = new FormData();
+                    form.append("files", file, file.name.trim());
+                    form.append("target_type", "inbody");
+                    const resp = await fetch(endpoints.doclingConvertFile, {
+                        method: "POST",
+                        body: form
+                    });
+                    if (!resp.ok) {
+                        const t = await resp.text();
+                        console.error("Docling error:", t);
+                        throw new Error(`Docling parse failed: ${resp.status}`);
+                    }
+                    const doc = await resp.json();
+                    parsedResult = {
+                        text: doc?.document?.md_content || doc?.document?.text_content || ""
+                    };
+                } else {
+                    // Kolosal Parser and MarkItDown use JSON with base64 data
+                    const base64Data = await fileToBase64(file);
+                    let endpoint;
+                    if (parserVal === "Kolosal Parser") {
+                        endpoint = endpoints.parseByDocType(docType);
+                    } else {
+                        // MarkItDown has dedicated endpoints per type
+                        endpoint = endpoints.markitdownParseByDocType(docType);
+                    }
+            const parseResponse = await fetch(endpoint, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                data: base64Data,
+                fileName: file.name.trim(),
+                file_name: file.name.trim()
+                        })
+                    });
+                    if (!parseResponse.ok) {
+                        const errorText = await parseResponse.text();
+                        console.error("Error response:", errorText);
+                        throw new Error(`Parse request failed: ${parseResponse.status}`);
+                    }
+                    parsedResult = await parseResponse.json();
                 }
-                parsedResult = await parseResponse.json();
             }
 
             if (chunkingTitle === "no chunking" && parsedResult) {
@@ -188,7 +211,7 @@ function AddDocument() {
                 }
 
                 Toast("Loading...");
-                const chunkingResponse = await fetch("https://api.kolosal.ai/chunking", {
+                const chunkingResponse = await fetch(endpoints.chunking, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(chunkingBody)
@@ -261,7 +284,7 @@ function AddToCollection(documents) {
     newBtn.addEventListener("click", async () => {
         Toast("Loading...");
         try {
-            const response = await fetch("https://api.kolosal.ai/add_documents", {
+            const response = await fetch(endpoints.addDocuments, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ documents })

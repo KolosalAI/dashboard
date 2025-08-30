@@ -1,11 +1,12 @@
 import { Toast } from "./component.js";
+import { endpoints } from "./config.js";
 
 
 let modelData = null;
 
 async function FetchData() {
     try {
-        const resp = await fetch("https://api.kolosal.ai/status");
+    const resp = await fetch(endpoints.status);
         if (!resp.ok) throw new Error("Failed to fetch status");
         return await resp.json();
     } catch (err) {
@@ -41,7 +42,7 @@ function ModelInfo(data) {
 
 async function FetchDownloads(loop = false) {
     try {
-        const resp = await fetch("https://api.kolosal.ai/downloads");
+    const resp = await fetch(endpoints.downloads);
         if (!resp.ok) throw new Error("Failed to fetch downloads");
         const data = await resp.json();
 
@@ -175,7 +176,7 @@ function ModelList(data) {
 async function DeleteModel(engineId) {
     if (!engineId) return;
     try {
-        await fetch(`https://api.kolosal.ai/models/${encodeURIComponent(engineId)}`, {
+    await fetch(`${endpoints.models}/${encodeURIComponent(engineId)}`, {
             method: 'DELETE'
         });
 
@@ -444,7 +445,7 @@ function AddModel() {
         }
 
         try {
-            const statusResp = await fetch("https://api.kolosal.ai/status");
+            const statusResp = await fetch(endpoints.status);
             if (!statusResp.ok) {
                 Toast("Server is unavailable. Please try again later.");
                 return;
@@ -453,7 +454,7 @@ function AddModel() {
             Toast("Server is active. Adding model...");
             await statusResp.json();
 
-            const postResp = await fetch("https://api.kolosal.ai/models", {
+            const postResp = await fetch(endpoints.models, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data)
