@@ -7,10 +7,11 @@ This repo serves a static dashboard UI with a tiny Node/Express server, packaged
 The server exposes `/config.js` that injects `window.__APP_CONFIG__` used by `script/config.js`.
 
 Environment variables:
-- `API_BASE_URL` (default: https://api.kolosal.ai)
+
+- `API_BASE_URL` (default: <https://api.kolosal.ai>)
 - `DOCLING_BASE_URL` (default: same as API_BASE_URL)
 - `MARKITDOWN_BASE_URL` (default: same as API_BASE_URL)
-- `PORT` (default: 8080)
+- `PORT` (default: 3000)
 
 ## Local run
 
@@ -23,7 +24,7 @@ Environment variables:
 $env:API_BASE_URL="https://api.kolosal.ai"; npm install; npm start
 ```
 
-Open http://localhost:8080.
+Open <http://localhost:3000>.
 
 ## Docker
 
@@ -57,6 +58,7 @@ helm upgrade --install kolosal-dashboard charts/kolosal-dashboard `
 Service exposes HTTP on port 80 by default. Add an Ingress if needed.
 
 ## Notes
+
 - The UI layout is untouched; only JS was refactored to use a centralized config.
 - Docling uploads use multipart/form-data at `/v1/convert/file`.
 - MarkItDown uses specific parse endpoints: `/parse_pdf`, `/parse_docx`, `/parse_xlsx`, `/parse_pptx`, `/parse_html`.

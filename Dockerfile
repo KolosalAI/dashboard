@@ -13,10 +13,10 @@ RUN npm ci --omit=dev || npm install --omit=dev
 COPY . .
 
 # Expose port
-EXPOSE 8080
+EXPOSE 3000
 
 # Set default envs (can be overridden at runtime)
-ENV PORT=8080 \
+ENV PORT=3000 \
     API_BASE_URL=https://api.kolosal.ai \
     DOCLING_BASE_URL=https://api.kolosal.ai \
     MARKITDOWN_BASE_URL=https://api.kolosal.ai
