@@ -35,10 +35,18 @@ Build and run:
 docker build -t kolosal-dashboard:local .
 
 # Run with env overrides
-docker run --rm -p 8080:8080 `
+docker run --rm -p 3000:3000 `
   -e API_BASE_URL=https://api.kolosal.ai `
   -e DOCLING_BASE_URL=https://docling.example.com `
   -e MARKITDOWN_BASE_URL=https://markitdown.example.com `
+  kolosal-dashboard:local
+```
+
+To run on a different port, set `PORT` and map the same host port:
+
+```powershell
+docker run --rm -e PORT=8080 -p 8080:8080 `
+  -e API_BASE_URL=https://api.kolosal.ai `
   kolosal-dashboard:local
 ```
 
